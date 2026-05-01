@@ -76,24 +76,23 @@ final class SkillComposerModel {
 
     func rebuildGraph() {
         let ordered = package.skills.sorted { $0.executionOrder < $1.executionOrder }
-        
+
         graphNodes = ordered.enumerated().map { index, item in
             let existing = graphNodes.first(where: { $0.skillID == item.skillID })
-            
-            let column = index % 3
-            let row = index / 3
-            
+            let column = index % 4
+            let row = index / 4
+
             return SkillGraphNode(
                 id: existing?.id ?? UUID(),
                 skillID: item.skillID,
                 title: item.displayName,
                 position: existing?.position ?? GraphPoint(
                     x: 220 + Double(column) * 320,
-                    y: 140 + Double(row) * 240
+                    y: 160 + Double(row) * 240
                 )
             )
         }
-        
+
         validateEdges()
     }
 

@@ -14,13 +14,15 @@ struct SkillNodeCard: View {
 
     @State private var dragOffset: CGSize = .zero
 
+    private let cardWidth: CGFloat = 280
+
     var body: some View {
         VStack(spacing: 0) {
             header
             Divider()
             content
         }
-        .frame(width: 280)
+        .frame(width: cardWidth)
         .background(
             RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .fill(.regularMaterial)
@@ -86,11 +88,7 @@ struct SkillNodeCard: View {
                 if let skill = model.skill(for: node.skillID) {
                     ForEach(skill.declaredInputs) { port in
                         InputPortView(
-                            handle: PortHandle(
-                                skillID: node.skillID,
-                                portID: port.id,
-                                side: .input
-                            ),
+                            handle: PortHandle(skillID: node.skillID, portID: port.id, side: .input),
                             port: port
                         )
                     }
@@ -106,11 +104,7 @@ struct SkillNodeCard: View {
                 if let skill = model.skill(for: node.skillID) {
                     ForEach(skill.declaredOutputs) { port in
                         OutputPortView(
-                            handle: PortHandle(
-                                skillID: node.skillID,
-                                portID: port.id,
-                                side: .output
-                            ),
+                            handle: PortHandle(skillID: node.skillID, portID: port.id, side: .output),
                             port: port
                         )
                     }
