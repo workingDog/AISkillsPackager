@@ -7,7 +7,6 @@
 import SwiftUI
 
 
-
 struct InputPortView: View {
     @Environment(SkillComposerModel.self) private var model
 
@@ -17,13 +16,12 @@ struct InputPortView: View {
     var body: some View {
         HStack(spacing: 8) {
             Circle()
-                .fill(portColor)
+                .fill(isHovered ? .orange : port.type.color)
                 .frame(width: 12, height: 12)
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(port.name)
                     .font(.caption.weight(.medium))
-
                 Text(port.type.rawValue)
                     .font(.caption2)
                     .foregroundStyle(.secondary)
@@ -51,13 +49,10 @@ struct InputPortView: View {
         }
         .background(
             GeometryReader { proxy in
-                Color.clear
-                    .onAppear {
-                        model.registerPortFrame(handle, frame: proxy.frame(in: .named("graph-space")))
-                    }
-                    .onChange(of: proxy.frame(in: .named("graph-space"))) { _, newFrame in
-                        model.registerPortFrame(handle, frame: newFrame)
-                    }
+                Color.clear.preference(
+                    key: PortFramePreferenceKey.self,
+                    value: [handle: proxy.frame(in: .named("graph-space"))]
+                )
             }
         )
     }
@@ -65,9 +60,4 @@ struct InputPortView: View {
     private var isHovered: Bool {
         model.hoveredInputPort == handle
     }
-
-    private var portColor: Color {
-        isHovered ? .orange : port.type.color
-    }
 }
-

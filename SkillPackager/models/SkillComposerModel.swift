@@ -28,9 +28,6 @@ final class SkillComposerModel {
     var hoveredInputPort: PortHandle?
 
     var validationIssues: [EdgeValidationIssue] = []
-    
-    var portFrames: [PortHandle: CGRect] = [:]
-    
     var selectedProvider: ExportProvider = .openAIResponses
 
     var exportDocument = ExportPayload(data: Data())
@@ -39,14 +36,6 @@ final class SkillComposerModel {
     
     init() {
         self.library = SkillDefinition.samples
-    }
-
-    func registerPortFrame(_ handle: PortHandle, frame: CGRect) {
-        portFrames[handle] = frame
-    }
-
-    func portFrame(for handle: PortHandle) -> CGRect? {
-        portFrames[handle]
     }
 
     func skill(for id: UUID) -> SkillDefinition? {

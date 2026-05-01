@@ -6,9 +6,17 @@
 //
 import SwiftUI
 
+struct PortFramePreferenceKey: PreferenceKey {
+    static var defaultValue: [PortHandle: CGRect] = [:]
+
+    static func reduce(value: inout [PortHandle: CGRect], nextValue: () -> [PortHandle: CGRect]) {
+        value.merge(nextValue(), uniquingKeysWith: { _, new in new })
+    }
+}
 
 struct SkillGraphEditorView: View {
     @Environment(SkillComposerModel.self) private var model
+    @State private var portFrames: [PortHandle: CGRect] = [:]
 
     let canvasSize: CGSize
 
@@ -17,7 +25,10 @@ struct SkillGraphEditorView: View {
             background
 
             ForEach(model.graphNodes) { node in
-                SkillNodeCard(node: node)
+                SkillNodeCard(
+                    node: node,
+                    portFrames: portFrames
+                )
             }
 
             Canvas { context, _ in
@@ -26,7 +37,7 @@ struct SkillGraphEditorView: View {
                 }
 
                 if let start = model.dragStartPort,
-                   let startFrame = model.portFrame(for: start),
+                   let startFrame = portFrames[start],
                    let current = model.dragCurrentPoint {
                     let startPoint = CGPoint(x: startFrame.midX, y: startFrame.midY)
                     let path = edgePath(from: startPoint, to: current)
@@ -42,6 +53,9 @@ struct SkillGraphEditorView: View {
         }
         .frame(width: canvasSize.width, height: canvasSize.height)
         .coordinateSpace(name: "graph-space")
+        .onPreferenceChange(PortFramePreferenceKey.self) { newFrames in
+            portFrames = newFrames
+        }
         .onAppear {
             if model.graphNodes.isEmpty {
                 model.rebuildGraph()
@@ -51,14 +65,7 @@ struct SkillGraphEditorView: View {
 
     private var background: some View {
         ZStack {
-            LinearGradient(
-                colors: [
-                    Color(red: 0.97, green: 0.96, blue: 0.93),
-                    Color(red: 0.89, green: 0.94, blue: 0.97)
-                ],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
+            Color.blue.opacity(0.15)
 
             Canvas { context, size in
                 let spacing: CGFloat = 28
@@ -85,12 +92,11 @@ struct SkillGraphEditorView: View {
         let fromHandle = PortHandle(skillID: edge.from.skillID, portID: edge.from.portID, side: .output)
         let toHandle = PortHandle(skillID: edge.to.skillID, portID: edge.to.portID, side: .input)
 
-        guard let fromFrame = model.portFrame(for: fromHandle),
-              let toFrame = model.portFrame(for: toHandle) else { return }
+        guard let fromFrame = portFrames[fromHandle],
+              let toFrame = portFrames[toHandle] else { return }
 
         let start = CGPoint(x: fromFrame.midX, y: fromFrame.midY)
         let end = CGPoint(x: toFrame.midX, y: toFrame.midY)
-
         let path = edgePath(from: start, to: end)
         let issue = model.issue(for: edge.id)
 

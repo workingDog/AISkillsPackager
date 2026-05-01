@@ -11,10 +11,9 @@ struct SkillNodeCard: View {
     @Environment(SkillComposerModel.self) private var model
 
     let node: SkillGraphNode
+    let portFrames: [PortHandle: CGRect]
 
     @State private var dragOffset: CGSize = .zero
-
-    private let cardWidth: CGFloat = 280
 
     var body: some View {
         VStack(spacing: 0) {
@@ -22,16 +21,16 @@ struct SkillNodeCard: View {
             Divider()
             content
         }
-        .frame(width: cardWidth)
+        .frame(width: 280)
         .background(
             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .fill(.regularMaterial)
+                .fill(Color.green.opacity(0.2))
         )
         .overlay(
             RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .stroke(.black.opacity(0.08), lineWidth: 1)
         )
-        .shadow(color: .black.opacity(0.08), radius: 12, y: 8)
+        .shadow(color: .black.opacity(0.05), radius: 4, y: 2)
         .position(
             x: node.position.x + dragOffset.width,
             y: node.position.y + dragOffset.height
@@ -105,7 +104,8 @@ struct SkillNodeCard: View {
                     ForEach(skill.declaredOutputs) { port in
                         OutputPortView(
                             handle: PortHandle(skillID: node.skillID, portID: port.id, side: .output),
-                            port: port
+                            port: port,
+                            portFrames: portFrames
                         )
                     }
                 }
