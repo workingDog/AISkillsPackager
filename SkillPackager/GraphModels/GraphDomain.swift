@@ -94,6 +94,45 @@ final class SkillDefinition: Identifiable, Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
+    
+    static let samples: [SkillDefinition] = [
+        SkillDefinition(
+            name: "Web Research",
+            summary: "Fetches fresh information from the web.",
+            markdown: "# Web Research",
+            declaredInputs: [
+                SkillPort(name: "query", type: .text, isRequired: true)
+            ],
+            declaredOutputs: [
+                SkillPort(name: "findings", type: .json, isRequired: true)
+            ],
+            usageInstructions: "Use when current external information is needed."
+        ),
+        SkillDefinition(
+            name: "Outline Writer",
+            summary: "Turns findings into a structured outline.",
+            markdown: "# Outline Writer",
+            declaredInputs: [
+                SkillPort(name: "findings", type: .json, isRequired: true)
+            ],
+            declaredOutputs: [
+                SkillPort(name: "outline", type: .markdown, isRequired: true)
+            ],
+            usageInstructions: "Use after research."
+        ),
+        SkillDefinition(
+            name: "Image Generator",
+            summary: "Creates a visual asset from a prompt.",
+            markdown: "# Image Generator",
+            declaredInputs: [
+                SkillPort(name: "prompt", type: .text, isRequired: true)
+            ],
+            declaredOutputs: [
+                SkillPort(name: "image", type: .image, isRequired: true)
+            ],
+            usageInstructions: "Use when a bitmap image is needed."
+        )
+    ]
 }
 
 struct GraphPoint: Hashable, Codable, Sendable {
