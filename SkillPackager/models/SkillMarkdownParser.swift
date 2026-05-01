@@ -86,9 +86,20 @@ struct SkillMarkdownParser {
         return rows.map {
             SkillPort(
                 name: $0["name"] as? String ?? "value",
-                type: $0["type"] as? String ?? "text",
-                isRequired: ($0["required"] as? String)?.lowercased() == "true"
+                type: SkillDataType(rawValue: (($0["type"] as? String) ?? "text").lowercased()) ?? .text,
+                isRequired: parseBool($0["required"])
             )
+        }
+    }
+    
+    private func parseBool(_ value: Any?) -> Bool {
+        switch value {
+        case let bool as Bool:
+            return bool
+        case let string as String:
+            return string.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() == "true"
+        default:
+            return false
         }
     }
 
@@ -143,5 +154,25 @@ struct SkillMarkdownParser {
 
         return result
     }
+    
+    private func parseDataType(_ value: Any?) -> SkillDataType {
+        let raw = (value as? String)?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .lowercased() ?? "text"
+
+        return switch raw {
+        case "text", "string": .text
+        case "markdown", "md": .markdown
+        case "json": .json
+        case "image": .image
+        case "audio": .audio
+        case "number", "int", "float", "double": .number
+        case "boolean", "bool": .boolean
+        case "any": .any
+        default: .text
+        }
+    }
+
+
 }
 

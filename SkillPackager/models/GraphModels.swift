@@ -8,6 +8,8 @@ import Foundation
 import Observation
 import CoreGraphics
 
+
+/*
 struct GraphPoint: Codable, Hashable {
     var x: Double
     var y: Double
@@ -49,4 +51,4 @@ final class SkillGraphNode: Identifiable, Hashable {
     }
 }
 
-
+*/
