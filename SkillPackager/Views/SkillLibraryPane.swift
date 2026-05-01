@@ -8,7 +8,6 @@ import Foundation
 import SwiftUI
 
 
-
 struct SkillLibraryPane: View {
     @Environment(SkillComposerModel.self) var model: SkillComposerModel
     @Binding var isImporting: Bool
@@ -61,16 +60,13 @@ struct SkillLibraryPane: View {
         let inputs = skill.declaredInputs.map(\.name).joined(separator: ", ")
         let outputs = skill.declaredOutputs.map(\.name).joined(separator: ", ")
 
-        switch (inputs.isEmpty, outputs.isEmpty) {
-        case (false, false):
-            return "In: \(inputs)  Out: \(outputs)"
-        case (false, true):
-            return "In: \(inputs)"
-        case (true, false):
-            return "Out: \(outputs)"
-        case (true, true):
-            return ""
+        return switch (inputs.isEmpty, outputs.isEmpty) {
+            case (false, false): "In: \(inputs)  Out: \(outputs)"
+            case (false, true): "In: \(inputs)"
+            case (true, false): "Out: \(outputs)"
+            case (true, true): ""
         }
     }
     
 }
+

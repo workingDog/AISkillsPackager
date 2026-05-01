@@ -1,0 +1,24 @@
+//
+//  PackageSelectionPane.swift
+//  SkillPackager
+//
+//  Created by Ringo Wathelet on 2026/05/01.
+//
+import SwiftUI
+
+
+struct PackageSectionPane: View {
+    @Binding var selectedSection: PackageSection?
+
+    var body: some View {
+        List(PackageSection.allCases, selection: $selectedSection) { section in
+            Label(section.title, systemImage: section.systemImage)
+                .tag(section)
+                .listRowBackground(Color.clear)
+        }
+        .scrollContentBackground(.hidden)
+        .background(Color(red: 0.90, green: 0.92, blue: 0.88))
+    }
+}
+
+
