@@ -1,5 +1,5 @@
 //
-//  PackageEditorPane.swift
+//  PackageDetailsView.swift
 //  SkillPackager
 //
 //  Created by Ringo Wathelet on 2026/05/01.
@@ -8,36 +8,7 @@ import Foundation
 import SwiftUI
 
 
-struct PackageEditorPane: View {
-    @Environment(SkillComposerModel.self) var model: SkillComposerModel
-    @Binding var isExporting: Bool
-
-    var body: some View {
-        TabView {
-            PackageDetailsView(isExporting: $isExporting)
-                .tabItem {
-                    Label("Details", systemImage: "slider.horizontal.3")
-                }
-
-            GraphComposerView()
-                .padding(20)
-                .tabItem {
-                    Label("Graph", systemImage: "point.3.connected.trianglepath.dotted")
-                }
-
-            ExportPane()
-                .padding(20)
-                .tabItem {
-                    Label("Providers", systemImage: "paperplane")
-                }
-        }
-        .tabViewStyle(.sidebarAdaptable)
-    }
-}
-
-
-/*
-struct PackageEditorPane: View {
+struct PackageDetailsView: View {
     @Environment(SkillComposerModel.self) var model: SkillComposerModel
     @Binding var isExporting: Bool
 
@@ -67,19 +38,11 @@ struct PackageEditorPane: View {
                 }
 
                 GroupBox("Selected Skills") {
-                    if model.package.skills.isEmpty {
-                        ContentUnavailableView(
-                            "No skills in package",
-                            systemImage: "square.stack.3d.up.slash",
-                            description: Text("Select skills on the left, then tap Build Package.")
-                        )
-                    } else {
-                        VStack(alignment: .leading, spacing: 12) {
-                            ForEach(model.package.skills.sorted(by: { $0.executionOrder < $1.executionOrder })) { item in
-                                PackagedSkillCard(packagedSkill: item)
-                            }
-                            .onMove(perform: model.moveSkill)
+                    VStack(alignment: .leading, spacing: 12) {
+                        ForEach(model.package.skills.sorted(by: { $0.executionOrder < $1.executionOrder })) { item in
+                            PackagedSkillCard(packagedSkill: item)
                         }
+                        .onMove(perform: model.moveSkill)
                     }
                 }
 
@@ -93,12 +56,10 @@ struct PackageEditorPane: View {
                             draftTransform: $draftTransform
                         )
 
-                        if !model.package.mappings.isEmpty {
-                            ForEach(model.package.mappings) { mapping in
-                                MappingRow(mapping: mapping)
-                            }
-                            .onDelete(perform: model.removeMappings)
+                        ForEach(model.package.mappings) { mapping in
+                            MappingRow(mapping: mapping)
                         }
+                        .onDelete(perform: model.removeMappings)
                     }
                 }
 
@@ -113,8 +74,8 @@ struct PackageEditorPane: View {
                 }
 
                 HStack {
-                    Button("Rebuild from Selection") {
-                        model.rebuildPackageFromSelection()
+                    Button("Rebuild Graph") {
+                        model.rebuildGraph()
                     }
 
                     Spacer()
@@ -135,4 +96,4 @@ struct PackageEditorPane: View {
         }
     }
 }
-*/
+

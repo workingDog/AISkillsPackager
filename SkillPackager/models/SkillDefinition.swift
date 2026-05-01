@@ -16,8 +16,8 @@ struct SkillPort: Identifiable, Hashable, Codable {
     var isRequired: Bool = false
 }
 
-@Observable
 @MainActor
+@Observable
 final class SkillDefinition: Identifiable, Hashable {
     let id: UUID
     var name: String

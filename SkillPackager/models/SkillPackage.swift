@@ -7,8 +7,8 @@
 import SwiftUI
 
 
-@Observable
 @MainActor
+@Observable
 final class SkillPackage {
     var name: String
     var globalInstructions: String

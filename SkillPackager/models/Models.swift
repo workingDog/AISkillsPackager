@@ -67,3 +67,10 @@ struct ExportPayload: FileDocument {
         FileWrapper(regularFileWithContents: data)
     }
 }
+
+enum ExportProvider: String, CaseIterable, Identifiable {
+    case openAIResponses = "OpenAI Responses"
+    case geminiGenerateContent = "Gemini GenerateContent"
+
+    var id: String { rawValue }
+}

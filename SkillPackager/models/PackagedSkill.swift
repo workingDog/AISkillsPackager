@@ -7,8 +7,8 @@
 import SwiftUI
 
 
-@Observable
 @MainActor
+@Observable
 final class PackagedSkill: Identifiable, Hashable {
     let id: UUID
     var skillID: UUID

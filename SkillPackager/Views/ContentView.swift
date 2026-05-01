@@ -4,7 +4,7 @@
 //
 //  Created by Ringo Wathelet on 2026/05/01.
 //
-
+import Foundation
 import SwiftUI
 import UniformTypeIdentifiers
 
@@ -21,7 +21,7 @@ struct ContentView: View {
                 .navigationTitle("Skills")
         } detail: {
             PackageEditorPane(isExporting: $isExporting)
-            .navigationTitle("Package Composer")
+                .navigationTitle("Package Composer")
         }
         .fileImporter(
             isPresented: $isImporting,

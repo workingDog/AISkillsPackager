@@ -4,16 +4,16 @@
 //
 //  Created by Ringo Wathelet on 2026/05/01.
 //
+import Foundation
 import SwiftUI
+
 
 
 struct SkillLibraryPane: View {
     @Environment(SkillComposerModel.self) var model: SkillComposerModel
     @Binding var isImporting: Bool
-
+    
     var body: some View {
-        @Bindable var model = model
-
         List(model.library) { skill in
             Button {
                 model.toggleSelection(for: skill)
@@ -49,7 +49,6 @@ struct SkillLibraryPane: View {
                 Button("Import SKILL.md") {
                     isImporting = true
                 }
-
                 Button("Build Package") {
                     model.rebuildPackageFromSelection()
                 }
@@ -57,7 +56,7 @@ struct SkillLibraryPane: View {
             }
         }
     }
-
+    
     private func portSummary(for skill: SkillDefinition) -> String {
         let inputs = skill.declaredInputs.map(\.name).joined(separator: ", ")
         let outputs = skill.declaredOutputs.map(\.name).joined(separator: ", ")
@@ -73,4 +72,5 @@ struct SkillLibraryPane: View {
             return ""
         }
     }
+    
 }

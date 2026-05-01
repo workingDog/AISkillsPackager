@@ -8,15 +8,17 @@ import Foundation
 import SwiftUI
 
 
-
-@Observable
 @MainActor
+@Observable
 final class SkillComposerModel {
     var library: [SkillDefinition] = SkillDefinition.samples
     var selectedSkillIDs: Set<UUID> = []
     var package = SkillPackage()
     var exportDocument = ExportPayload(data: Data())
     var exportSuggestedFilename = "skill-package.json"
+    
+    var graphNodes: [SkillGraphNode] = []
+    var selectedProvider: ExportProvider = .openAIResponses
 
     @ObservationIgnored
     private let parser = SkillMarkdownParser()
@@ -30,23 +32,6 @@ final class SkillComposerModel {
             selectedSkillIDs.remove(skill.id)
         } else {
             selectedSkillIDs.insert(skill.id)
-        }
-    }
-
-    func rebuildPackageFromSelection() {
-        let ordered = selectedSkills.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
-        package.skills = ordered.enumerated().map { index, skill in
-            PackagedSkill(
-                skillID: skill.id,
-                displayName: skill.name,
-                localInstructions: skill.usageInstructions,
-                executionOrder: index
-            )
-        }
-
-        let validIDs = Set(ordered.map(\.id))
-        package.mappings.removeAll {
-            !validIDs.contains($0.fromSkillID) || !validIDs.contains($0.toSkillID)
         }
     }
 
@@ -181,4 +166,45 @@ final class SkillComposerModel {
             }
         }
     }
+    
+    func rebuildGraph() {
+        let ordered = package.skills.sorted { $0.executionOrder < $1.executionOrder }
+
+        graphNodes = ordered.enumerated().map { index, item in
+            let existing = graphNodes.first(where: { $0.skillID == item.skillID })
+            return SkillGraphNode(
+                id: existing?.id ?? UUID(),
+                skillID: item.skillID,
+                title: item.displayName,
+                position: existing?.position ?? GraphPoint(
+                    x: 180 + Double(index % 2) * 320,
+                    y: 120 + Double(index / 2) * 220
+                )
+            )
+        }
+    }
+
+    func node(for skillID: UUID) -> SkillGraphNode? {
+        graphNodes.first(where: { $0.skillID == skillID })
+    }
+
+    func rebuildPackageFromSelection() {
+        let ordered = selectedSkills.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+        package.skills = ordered.enumerated().map { index, skill in
+            PackagedSkill(
+                skillID: skill.id,
+                displayName: skill.name,
+                localInstructions: skill.usageInstructions,
+                executionOrder: index
+            )
+        }
+
+        let validIDs = Set(ordered.map(\.id))
+        package.mappings.removeAll {
+            !validIDs.contains($0.fromSkillID) || !validIDs.contains($0.toSkillID)
+        }
+
+        rebuildGraph()
+    }
+  
 }

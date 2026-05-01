@@ -7,8 +7,8 @@
 import SwiftUI
 
 
-@Observable
 @MainActor
+@Observable
 final class SkillMapping: Identifiable, Hashable {
     let id: UUID
     var fromSkillID: UUID
