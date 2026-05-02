@@ -44,14 +44,28 @@ struct SkillLibraryPane: View {
             .buttonStyle(.plain)
         }
         .toolbar {
-            ToolbarItemGroup(placement: .primaryAction) {
-                Button("Import SKILL.md") {
+            ToolbarItemGroup(placement: .automatic) {
+                Button {
                     isImporting = true
-                }
-                Button("Build Package") {
+                } label: {
+                    VStack {
+                        Text("Import")
+                        Text("Skills")
+                    }
+                }.buttonStyle(.glass)
+                .padding(.top, 20)
+                
+                Button {
                     model.rebuildPackageFromSelection()
+                } label: {
+                    VStack {
+                        Text("Build")
+                        Text("Package")
+                    }
                 }
+                .buttonStyle(.glass)  
                 .disabled(model.selectedSkillIDs.isEmpty)
+                .padding(.top, 20)
             }
         }
     }

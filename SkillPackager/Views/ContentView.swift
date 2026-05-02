@@ -24,20 +24,17 @@ struct ContentView: View {
         NavigationSplitView {
             SkillLibraryPane(isImporting: $isImporting)
                 .navigationTitle("Skills")
-                .navigationSplitViewColumnWidth(min: 240, ideal: 280, max: 320)
+                .navigationSplitViewColumnWidth(min: 380, ideal: 380, max: 480)
                 .background(sidebarBackground)
         } content: {
             PackageSectionPane(selectedSection: $selectedSection)
                 .navigationTitle("Package")
-                .navigationSplitViewColumnWidth(min: 180, ideal: 220, max: 260)
+                .navigationSplitViewColumnWidth(min: 200, ideal: 220, max: 280)
                 .background(sidebarBackground)
         } detail: {
-            PackageDetailWorkspace(
-                selectedSection: selectedSection,
-                isExporting: $isExporting
-            )
+            PackageDetailWorkspace(selectedSection: selectedSection, isExporting: $isExporting)
             .navigationTitle(selectedSection?.title ?? "Workspace")
-            .navigationSplitViewColumnWidth(min: 700, ideal: 1000, max: .infinity)
+            .navigationSplitViewColumnWidth(min: 700, ideal: 1200, max: .infinity)
             .background(contentBackground)
         }
         .background(appBackground)
@@ -46,15 +43,22 @@ struct ContentView: View {
             allowedContentTypes: [.plainText],
             allowsMultipleSelection: true
         ) { result in
-            guard case .success(let urls) = result else { return }
-            model.importSkillMarkdownFiles(urls: urls)
+            switch result {
+                case .success(let urls): model.importSkillMarkdownFiles(urls: urls)
+                case .failure(let error): print("---> import error: \(error)")
+            }
         }
         .fileExporter(
             isPresented: $isExporting,
             document: model.exportDocument,
             contentType: .json,
             defaultFilename: model.exportSuggestedFilename
-        ) { _ in }
+        ) { result in
+            switch result {
+                case .success: print("---> export successful")
+                case .failure(let error): print("---> export error: \(error)")
+            }
+        }
         .task {
             if model.package.skills.isEmpty, !model.selectedSkillIDs.isEmpty {
                 model.rebuildPackageFromSelection()
