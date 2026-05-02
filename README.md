@@ -4,7 +4,15 @@
 An experiment to learn about **AI skills and agents**, and packaging these into 
 a package manifest with combined instructions ready for a AI model to use, for example using the REST API of Google Gemini.
 
-## User interface functions
+## User interface
+
+Basic 3 columns view.
+
+-   list of skills for selections, with possible import
+-   package view selection, details text, graph view and model packaging
+-   package construction area
+
+Functions
 
 -   loads SKILL.md files into a library
 -   select skills into a package
