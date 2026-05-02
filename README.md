@@ -1,6 +1,8 @@
 #  SkillPackager
 
 
+in progress
+
 An experiment to learn about **AI skills and agents**, and packaging these into 
 a package manifest with combined instructions ready for a AI model to use, for example using the REST API of Google Gemini.
 
