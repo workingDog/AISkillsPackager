@@ -26,7 +26,7 @@ final class SkillComposerModel {
     var hoveredInputPort: PortHandle?
 
     var validationIssues: [EdgeValidationIssue] = []
-    var selectedProvider: ExportProvider = .openAIResponses
+    var selectedProvider: ExportProvider = .geminiExport
 
     var exportDocument = ExportPayload(data: Data())
     var exportSuggestedFilename = "skill-package.json"

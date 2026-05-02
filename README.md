@@ -64,3 +64,6 @@ todo
 </p>
 
 
+## References
+
+-   [Textual](https://github.com/gonzalezreal/textual) "Render and customize rich attributed text in SwiftUI.", for markdown display.

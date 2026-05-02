@@ -17,6 +17,7 @@ struct PackageDetailWorkspace: View {
                 case .details: PackageDetailsView(isExporting: $isExporting)
                 case .graph: GraphTabView()
                 case .providers: ExportPane()
+                case .skills: DisplaySkills()
                 case nil:
                     ContentUnavailableView(
                         "No Section Selected",

@@ -10,6 +10,7 @@
 		C7BB60572FA5A8F300255613 /* picture3.png in Resources */ = {isa = PBXBuildFile; fileRef = C7BB60562FA5A8F300255613 /* picture3.png */; };
 		C7BB60592FA5A8F800255613 /* picture2.png in Resources */ = {isa = PBXBuildFile; fileRef = C7BB60582FA5A8F800255613 /* picture2.png */; };
 		C7BB605B2FA5A90700255613 /* picture1.png in Resources */ = {isa = PBXBuildFile; fileRef = C7BB605A2FA5A90700255613 /* picture1.png */; };
+		C7BB605E2FA5AC4400255613 /* Textual in Frameworks */ = {isa = PBXBuildFile; productRef = C7BB605D2FA5AC4400255613 /* Textual */; };
 		C7C760F92FA461CF00390E93 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C7C760F82FA461CF00390E93 /* README.md */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7BB605E2FA5AC4400255613 /* Textual in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +82,7 @@
 			);
 			name = SkillPackager;
 			packageProductDependencies = (
+				C7BB605D2FA5AC4400255613 /* Textual */,
 			);
 			productName = SkillPackager;
 			productReference = C71269B62FA33EB900537DAA /* SkillPackager.app */;
@@ -109,6 +112,9 @@
 			);
 			mainGroup = C71269AD2FA33EB900537DAA;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				C7BB605C2FA5AC4400255613 /* XCRemoteSwiftPackageReference "textual" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C71269B72FA33EB900537DAA /* Products */;
 			projectDirPath = "";
@@ -394,6 +400,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C7BB605C2FA5AC4400255613 /* XCRemoteSwiftPackageReference "textual" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/textual";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C7BB605D2FA5AC4400255613 /* Textual */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C7BB605C2FA5AC4400255613 /* XCRemoteSwiftPackageReference "textual" */;
+			productName = Textual;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C71269AE2FA33EB900537DAA /* Project object */;
 }

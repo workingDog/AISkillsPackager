@@ -73,6 +73,7 @@ enum PackageSection: String, CaseIterable, Identifiable, Hashable {
     case details = "Details"
     case graph = "Graph"
     case providers = "Providers"
+    case skills = "Skills"
 
     var id: String { rawValue }
 
@@ -83,6 +84,7 @@ enum PackageSection: String, CaseIterable, Identifiable, Hashable {
             case .details: "slider.horizontal.3"
             case .graph: "point.3.connected.trianglepath.dotted"
             case .providers: "paperplane"
+            case .skills: "sparkles.rectangle.stack"
         }
     }
 }

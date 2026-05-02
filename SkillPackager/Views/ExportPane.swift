@@ -17,17 +17,16 @@ struct ExportPane: View {
         @Bindable var model = model
 
         VStack(alignment: .leading, spacing: 16) {
-            Picker("Provider", selection: $model.selectedProvider) {
+            Text("Package Export JSON").font(.title2).bold().padding(10)
+            Picker("", selection: $model.selectedProvider) {
                 ForEach(ExportProvider.allCases) { provider in
                     Text(provider.rawValue).tag(provider)
                 }
             }
             .pickerStyle(.segmented)
-
-            Button("Render Export JSON") {
+            .onChange(of: model.selectedProvider) {
                 renderedJSON = renderJSON(for: model.selectedProvider, model: model)
             }
-            .buttonStyle(.borderedProminent)
 
             ScrollView {
                 Text(renderedJSON.isEmpty ? "Render an export payload to preview it here." : renderedJSON)
@@ -52,11 +51,11 @@ struct ExportPane: View {
 
         do {
             switch provider {
-            case .openAIResponses:
+            case .openAIExport:
                 let payload = ProviderExporter.openAIRequest(from: model)
                 return String(decoding: try encoder.encode(payload), as: UTF8.self)
 
-            case .geminiGenerateContent:
+            case .geminiExport:
                 let payload = ProviderExporter.geminiRequest(from: model)
                 return String(decoding: try encoder.encode(payload), as: UTF8.self)
             }

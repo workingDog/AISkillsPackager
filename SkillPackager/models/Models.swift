@@ -69,8 +69,8 @@ struct ExportPayload: FileDocument {
 }
 
 enum ExportProvider: String, CaseIterable, Identifiable {
-    case openAIResponses = "OpenAI Responses"
-    case geminiGenerateContent = "Gemini GenerateContent"
+    case geminiExport = "Gemini"
+    case openAIExport = "OpenAI"
 
     var id: String { rawValue }
 }
