@@ -51,3 +51,16 @@ Export that package in different forms:
 -   API prompt bundle for OpenAI/Gemini
 -   internal app format
 -   zip/folder/catalogue manifest for reuse
+
+
+## Usage
+
+todo
+
+<p float="left">
+    <img src="picture1.png" width="400" height="500" /> 
+    <img src="picture2.png" width="400" height="500" /> 
+    <img src="picture3.png" width="400" height="500" /> 
+</p>
+
+
