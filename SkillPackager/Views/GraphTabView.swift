@@ -13,9 +13,7 @@ struct GraphTabView: View {
             ScrollView([.horizontal, .vertical]) {
                 SkillGraphEditorView(canvasSize: CGSize(width: 2400, height: 1600))
                     .frame(width: 2400, height: 1600)
-                    .padding(24)
             }
-            .background(Color.black.opacity(0.03), in: RoundedRectangle(cornerRadius: 20, style: .continuous))
 
             GraphValidationPanel()
 

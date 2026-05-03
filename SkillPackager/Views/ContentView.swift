@@ -22,19 +22,18 @@ struct ContentView: View {
             SkillLibraryPane(isImporting: $isImporting)
                 .navigationTitle("Skills")
                 .navigationSplitViewColumnWidth(min: 300, ideal: 350, max: 500)
-                .background(interface.backColor)
+                .background(interface.leftPanelColor)
         } content: {
             PackageSectionPane(selectedSection: $selectedSection)
                 .navigationTitle("Package")
                 .navigationSplitViewColumnWidth(min: 250, ideal: 280, max: 450)
-                .background(interface.backColor)
+                .background(interface.midPanelColor)
         } detail: {
             PackageDetailWorkspace(selectedSection: selectedSection, isExporting: $isExporting)
             .navigationTitle(selectedSection?.title ?? "Workspace")
             .navigationSplitViewColumnWidth(min: 700, ideal: 1200, max: .infinity)
-            .background(interface.backColor)
+            .background(interface.rightPanelColor)
         }
-        .background(interface.backColor)
         .fileImporter(
             isPresented: $isImporting,
             allowedContentTypes: [.plainText],

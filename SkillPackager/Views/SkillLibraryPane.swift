@@ -64,11 +64,11 @@ struct SkillLibraryPane: View {
                     isImporting = true
                 } label: {
                     VStack {
-                        Text("Import")
-                        Text("Skills")
+                        Image(systemName: "sparkles.rectangle.stack")
+                        Text("Import").font(.caption)
                     }
                 }.buttonStyle(.glass)
-                .padding(.top, 10)
+                .padding(.top, 12)
             }
         }
     }

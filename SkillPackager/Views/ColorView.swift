@@ -8,7 +8,6 @@ import Foundation
 import SwiftUI
 
 
-
 struct ColorView: View {
     @Environment(InterfaceManager.self) var interface
     
@@ -45,9 +44,9 @@ struct ColorView: View {
                         switch interface.selectedColor {
                             case .back: return interface.backColor
                             case .text: return interface.textColor
-                            case .question: return interface.questionColor
-                            case .answer: return interface.answerColor
-                            case .copy: return interface.copyColor
+                            case .leftPanel: return interface.leftPanelColor
+                            case .midPanel: return interface.midPanelColor
+                            case .rightPanel: return interface.rightPanelColor
                             case .tools: return interface.toolsColor
                         }
                     },
@@ -55,9 +54,9 @@ struct ColorView: View {
                         switch interface.selectedColor {
                             case .back: interface.backColor = $0
                             case .text: interface.textColor = $0
-                            case .question: interface.questionColor = $0
-                            case .answer: interface.answerColor = $0
-                            case .copy: interface.copyColor = $0
+                            case .leftPanel: interface.leftPanelColor = $0
+                            case .midPanel: interface.midPanelColor = $0
+                            case .rightPanel: interface.rightPanelColor = $0
                             case .tools: interface.toolsColor = $0
                         }
                     }
@@ -72,15 +71,17 @@ struct ColorView: View {
                 .padding(.bottom, 10)
             }
             .padding(10)
+            
             Picker("", selection: $interface.selectedColor) {
                 Text("Back").tag(ColorType.back)
                 Text("Text").tag(ColorType.text)
-                Text("Question").tag(ColorType.question)
+                Text("LeftPanel").tag(ColorType.leftPanel)
             }
             .pickerStyle(.segmented)
+            
             Picker("", selection: $interface.selectedColor) {
-                Text("Answer").tag(ColorType.answer)
-                Text("Copy").tag(ColorType.copy)
+                Text("MidPanel").tag(ColorType.midPanel)
+                Text("RightPanel").tag(ColorType.rightPanel)
                 Text("Tools").tag(ColorType.tools)
             }
             .pickerStyle(.segmented)

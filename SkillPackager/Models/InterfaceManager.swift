@@ -14,10 +14,12 @@ import SwiftUI
     
     // UI colors
     var backColor = Color.teal
-    var textColor = Color.white
-    var questionColor = Color.green
-    var answerColor = Color.blue
-    var copyColor = Color.red
+    var textColor = Color.black
+    
+    var leftPanelColor = Color.green
+    var midPanelColor = Color.blue
+    var rightPanelColor = Color.red
+    
     var toolsColor = Color.blue
     var selectedColor = ColorType.back
     
@@ -29,9 +31,9 @@ import SwiftUI
     init() {
         backColor = StoreService.getColor(ColorType.back)
         textColor = StoreService.getColor(ColorType.text)
-        questionColor = StoreService.getColor(ColorType.question)
-        answerColor = StoreService.getColor(ColorType.answer)
-        copyColor = StoreService.getColor(ColorType.copy)
+        leftPanelColor = StoreService.getColor(ColorType.leftPanel)
+        midPanelColor = StoreService.getColor(ColorType.midPanel)
+        rightPanelColor = StoreService.getColor(ColorType.rightPanel)
         toolsColor = StoreService.getColor(ColorType.tools)
         
         lang = StoreService.getLang()

@@ -18,16 +18,6 @@ struct ExportPane: View {
 
         VStack(alignment: .leading, spacing: 16) {
             Text("Package Export JSON").font(.title2).bold().padding(10)
-//            Picker("", selection: $model.packageState.selectedProvider) {
-//                ForEach(ExportProvider.allCases) { provider in
-//                    Text(provider.rawValue).tag(provider)
-//                }
-//            }
-//            .pickerStyle(.segmented)
-//            .onChange(of: model.packageState.selectedProvider) {
-//                renderedJSON = renderJSON(for: model.packageState.selectedProvider, model: model)
-//            }
-
             ScrollView {
                 Text(renderedJSON.isEmpty ? "Render an export payload to preview it here." : renderedJSON)
                     .font(.system(.footnote, design: .monospaced))

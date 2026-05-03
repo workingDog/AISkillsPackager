@@ -10,7 +10,7 @@ import SwiftUI
 
 
 enum ColorType: String, CaseIterable {
-    case back, text, question, answer, copy, tools
+    case back, text, leftPanel, midPanel, rightPanel, tools
 }
 
 class StoreService {
@@ -36,9 +36,9 @@ class StoreService {
         switch key {
             case ColorType.back: return Color.teal
             case ColorType.text: return Color.white
-            case ColorType.question: return Color.green
-            case ColorType.answer: return Color.blue
-            case ColorType.copy: return Color.red
+            case ColorType.leftPanel: return Color.green
+            case ColorType.midPanel: return Color.blue
+            case ColorType.rightPanel: return Color.red
             case ColorType.tools: return Color.blue
         }
     }

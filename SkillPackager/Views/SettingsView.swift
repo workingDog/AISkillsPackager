@@ -24,7 +24,7 @@ struct SettingsView: View {
                             dismiss()
                         }.padding(8)
                         Spacer()
-                    }
+                    }.padding(5)
                     
                     Spacer()
                     
@@ -32,7 +32,6 @@ struct SettingsView: View {
                     
                     Spacer()
                 }
-                .padding(8)
             }
         }
         .preferredColorScheme(interface.isDarkMode ? .dark : .light)
@@ -45,9 +44,9 @@ struct SettingsView: View {
     func doSave() {
         StoreService.setColor(ColorType.back, color: interface.backColor)
         StoreService.setColor(ColorType.text, color: interface.textColor)
-        StoreService.setColor(ColorType.question, color: interface.questionColor)
-        StoreService.setColor(ColorType.answer, color: interface.answerColor)
-        StoreService.setColor(ColorType.copy, color: interface.copyColor)
+        StoreService.setColor(ColorType.leftPanel, color: interface.leftPanelColor)
+        StoreService.setColor(ColorType.midPanel, color: interface.midPanelColor)
+        StoreService.setColor(ColorType.rightPanel, color: interface.rightPanelColor)
         StoreService.setColor(ColorType.tools, color: interface.toolsColor)
         StoreService.setLang(interface.lang)
         StoreService.setDisplayMode(interface.isDarkMode)

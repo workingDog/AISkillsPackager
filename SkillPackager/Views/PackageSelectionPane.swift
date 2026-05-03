@@ -19,6 +19,5 @@ struct PackageSectionPane: View {
                 .listRowBackground(Color.clear)
         }
         .scrollContentBackground(.hidden)
-        .background(Color(red: 0.90, green: 0.92, blue: 0.88))
     }
 }
