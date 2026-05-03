@@ -19,6 +19,7 @@ enum SkillParserError: Error {
 }
 
 struct SkillMarkdownParser {
+    
     func parseFile(at url: URL) throws -> SkillDefinition {
         let markdown = try String(contentsOf: url, encoding: .utf8)
         return parse(markdown: markdown, sourceURL: url)
