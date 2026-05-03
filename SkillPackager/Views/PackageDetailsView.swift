@@ -30,6 +30,7 @@ struct PackageDetailsView: View {
                     }
                     .textFieldStyle(.roundedBorder)
                 }
+                .background(Color.gray.opacity(0.3), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
 
                 GroupBox("Selected Skills") {
                     if bindableModel.packageState.package.skills.isEmpty {
@@ -67,6 +68,7 @@ struct PackageDetailsView: View {
                         }
                     }
                 }
+                .background(Color.gray.opacity(0.3), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
 
                 GroupBox("Validation") {
                     if bindableModel.graphState.validationIssues.isEmpty {
@@ -86,6 +88,7 @@ struct PackageDetailsView: View {
                         }
                     }
                 }
+                .background(Color.gray.opacity(0.3), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
 
                 GroupBox("Compiled Instructions Preview") {
                     ScrollView(.horizontal) {
@@ -96,6 +99,7 @@ struct PackageDetailsView: View {
                     }
                     .frame(minHeight: 240, alignment: .topLeading)
                 }
+                .background(Color.gray.opacity(0.2), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
             }
             .padding(20)
         }

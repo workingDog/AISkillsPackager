@@ -8,6 +8,8 @@ import SwiftUI
 
 
 struct PackageSectionPane: View {
+    @Environment(InterfaceManager.self) var interface
+    
     @Binding var selectedSection: PackageSection?
 
     var body: some View {
@@ -20,5 +22,3 @@ struct PackageSectionPane: View {
         .background(Color(red: 0.90, green: 0.92, blue: 0.88))
     }
 }
-
-

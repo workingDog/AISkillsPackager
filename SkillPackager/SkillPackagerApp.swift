@@ -38,11 +38,13 @@ struct SkillPackagerApp: App {
  @main
  struct SkillComposerApp: App {
      @State private var model = SkillComposerModel()
-
+     @State private var interface = InterfaceManager()
+     
      var body: some Scene {
          WindowGroup {
              ContentView()
                  .environment(model)
+                 .environment(interface)
          }
      }
  }

@@ -9,8 +9,12 @@ import SwiftUI
 
 
 struct SkillLibraryPane: View {
+    @Environment(InterfaceManager.self) var interface
     @Environment(SkillComposerModel.self) var model: SkillComposerModel
+    
     @Binding var isImporting: Bool
+    
+    @State private var showSettings = false
     
     var body: some View {
         List(model.libraryState.library) { skill in
@@ -43,7 +47,18 @@ struct SkillLibraryPane: View {
             }
             .buttonStyle(.plain)
         }
+        .sheet(isPresented: $showSettings) {
+            SettingsView()
+                .environment(interface)
+                .presentationDetents([.large])
+        }
         .toolbar {
+            ToolbarItemGroup(placement: .automatic) {
+                Button(action: { showSettings = true }) {
+                    Image(systemName: "gearshape")
+                }.buttonStyle(.glass)
+                 .padding(.top, 10)
+            }
             ToolbarItemGroup(placement: .automatic) {
                 Button {
                     isImporting = true
@@ -53,7 +68,7 @@ struct SkillLibraryPane: View {
                         Text("Skills")
                     }
                 }.buttonStyle(.glass)
-                .padding(.top, 20)
+                .padding(.top, 10)
             }
         }
     }

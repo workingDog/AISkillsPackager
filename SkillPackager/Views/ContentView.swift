@@ -11,33 +11,30 @@ import UniformTypeIdentifiers
 
 struct ContentView: View {
     @Environment(SkillComposerModel.self) private var model
-
+    @Environment(InterfaceManager.self) var interface
+    
     @State private var isImporting = false
     @State private var isExporting = false
     @State private var selectedSection: PackageSection? = .details
-
-    private let appBackground = Color(red: 0.94, green: 0.95, blue: 0.92)
-    private let sidebarBackground = Color(red: 0.90, green: 0.92, blue: 0.88)
-    private let contentBackground = Color(red: 0.96, green: 0.96, blue: 0.94)
 
     var body: some View {
         NavigationSplitView {
             SkillLibraryPane(isImporting: $isImporting)
                 .navigationTitle("Skills")
-                .navigationSplitViewColumnWidth(min: 300, ideal: 300, max: 450)
-                .background(sidebarBackground)
+                .navigationSplitViewColumnWidth(min: 300, ideal: 350, max: 500)
+                .background(interface.backColor)
         } content: {
             PackageSectionPane(selectedSection: $selectedSection)
                 .navigationTitle("Package")
-                .navigationSplitViewColumnWidth(min: 200, ideal: 220, max: 280)
-                .background(sidebarBackground)
+                .navigationSplitViewColumnWidth(min: 250, ideal: 280, max: 450)
+                .background(interface.backColor)
         } detail: {
             PackageDetailWorkspace(selectedSection: selectedSection, isExporting: $isExporting)
             .navigationTitle(selectedSection?.title ?? "Workspace")
             .navigationSplitViewColumnWidth(min: 700, ideal: 1200, max: .infinity)
-            .background(contentBackground)
+            .background(interface.backColor)
         }
-        .background(appBackground)
+        .background(interface.backColor)
         .fileImporter(
             isPresented: $isImporting,
             allowedContentTypes: [.plainText],

@@ -59,6 +59,8 @@ Export that package in different forms:
 
 todo
 
+Reordering of the **Selected Skills** in the **Details** view can be done by dragging a skill to a new location.
+
 <p float="left">
     <img src="picture1.png" width="400" height="500" /> 
     <img src="picture2.png" width="400" height="500" /> 

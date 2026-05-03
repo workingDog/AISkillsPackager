@@ -43,6 +43,6 @@ struct PackagedSkillCard: View {
         }
         .padding(14)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+        .background(Color.gray.opacity(0.3), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
     }
 }

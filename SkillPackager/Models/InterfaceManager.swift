@@ -1,0 +1,43 @@
+//
+//  InterfaceManager.swift
+//  SkillPackager
+//
+//  Created by Ringo Wathelet on 2026/05/03.
+//
+
+import Foundation
+import SwiftUI
+
+
+
+@Observable class InterfaceManager {
+    
+    // UI colors
+    var backColor = Color.teal
+    var textColor = Color.white
+    var questionColor = Color.green
+    var answerColor = Color.blue
+    var copyColor = Color.red
+    var toolsColor = Color.blue
+    var selectedColor = ColorType.back
+    
+    var lang = "en"
+    var isDarkMode = false
+    var textSize: Int = 16
+    
+    
+    init() {
+        backColor = StoreService.getColor(ColorType.back)
+        textColor = StoreService.getColor(ColorType.text)
+        questionColor = StoreService.getColor(ColorType.question)
+        answerColor = StoreService.getColor(ColorType.answer)
+        copyColor = StoreService.getColor(ColorType.copy)
+        toolsColor = StoreService.getColor(ColorType.tools)
+        
+        lang = StoreService.getLang()
+        isDarkMode = StoreService.getDisplayMode()
+        textSize = StoreService.getTextSize()
+    }
+
+}
+

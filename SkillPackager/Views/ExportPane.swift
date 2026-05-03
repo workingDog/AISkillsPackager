@@ -18,15 +18,15 @@ struct ExportPane: View {
 
         VStack(alignment: .leading, spacing: 16) {
             Text("Package Export JSON").font(.title2).bold().padding(10)
-            Picker("", selection: $model.packageState.selectedProvider) {
-                ForEach(ExportProvider.allCases) { provider in
-                    Text(provider.rawValue).tag(provider)
-                }
-            }
-            .pickerStyle(.segmented)
-            .onChange(of: model.packageState.selectedProvider) {
-                renderedJSON = renderJSON(for: model.packageState.selectedProvider, model: model)
-            }
+//            Picker("", selection: $model.packageState.selectedProvider) {
+//                ForEach(ExportProvider.allCases) { provider in
+//                    Text(provider.rawValue).tag(provider)
+//                }
+//            }
+//            .pickerStyle(.segmented)
+//            .onChange(of: model.packageState.selectedProvider) {
+//                renderedJSON = renderJSON(for: model.packageState.selectedProvider, model: model)
+//            }
 
             ScrollView {
                 Text(renderedJSON.isEmpty ? "Render an export payload to preview it here." : renderedJSON)
@@ -35,8 +35,21 @@ struct ExportPane: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .frame(minHeight: 320)
-            .padding(12)
-            .background(.quaternary.opacity(0.25), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .background(Color.gray.opacity(0.2), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+            .padding(10)
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .automatic) {
+                Picker("", selection: $model.packageState.selectedProvider) {
+                    ForEach(ExportProvider.allCases) { provider in
+                        Text(provider.rawValue).tag(provider)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .onChange(of: model.packageState.selectedProvider) {
+                    renderedJSON = renderJSON(for: model.packageState.selectedProvider, model: model)
+                }.buttonStyle(.glass)
+            }
         }
         .onAppear {
             if renderedJSON.isEmpty {
