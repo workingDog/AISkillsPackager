@@ -65,6 +65,7 @@ Reordering of the **Selected Skills** in the **Details** view can be done by dra
     <img src="picture1.png" width="400" height="500" /> 
     <img src="picture2.png" width="400" height="500" /> 
     <img src="picture3.png" width="400" height="500" /> 
+    <img src="picture4.png" width="400" height="500" /> 
 </p>
 
 
