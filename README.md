@@ -71,4 +71,10 @@ Reordering of the **Selected Skills** in the **Details** view can be done by dra
 
 ## References
 
--   [Textual](https://github.com/gonzalezreal/textual) "Render and customize rich attributed text in SwiftUI.", for markdown display.
+-   [Textual](https://github.com/gonzalezreal/textual) "Render and customize rich attributed text in SwiftUI" used for markdown display.
+
+-   [Agent Skills](https://agentskills.io/home)
+
+-   [A practical guide to building agents](https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/)
+
+-   [Agent Skills](https://agentskills.io/home)

@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ExportPane: View {
     @Environment(SkillComposerModel.self) var model: SkillComposerModel
+    @Environment(InterfaceManager.self) var interface
 
     @State private var renderedJSON = ""
 
@@ -20,7 +21,7 @@ struct ExportPane: View {
             Text("Package Export JSON").font(.title2).bold().padding(10)
             ScrollView {
                 Text(renderedJSON.isEmpty ? "Render an export payload to preview it here." : renderedJSON)
-                    .font(.system(.footnote, design: .monospaced))
+                    .font(.system(size: CGFloat(interface.textSize), design: .monospaced))
                     .textSelection(.enabled)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -56,15 +57,25 @@ struct ExportPane: View {
             switch provider {
             case .openAIExport:
                 let payload = ProviderExporter.openAIRequest(from: model)
-                return String(decoding: try encoder.encode(payload), as: UTF8.self)
+                let lineString = String(decoding: try encoder.encode(payload), as: UTF8.self)
+                    .replacingOccurrences(of: "\\n", with: "\n")
+                return unescapeJSONString(lineString)
 
             case .geminiExport:
                 let payload = ProviderExporter.geminiRequest(from: model)
-                return String(decoding: try encoder.encode(payload), as: UTF8.self)
+                let lineString = String(decoding: try encoder.encode(payload), as: UTF8.self)
+                    .replacingOccurrences(of: "\\n", with: "\n")
+                return unescapeJSONString(lineString)
             }
         } catch {
             return "Failed to encode payload: \(error)"
         }
     }
+    
+    private func unescapeJSONString(_ string: String) -> String {
+        let data = "\"\(string)\"".data(using: .utf8)!
+        return (try? JSONDecoder().decode(String.self, from: data)) ?? string
+    }
+    
 }
 
