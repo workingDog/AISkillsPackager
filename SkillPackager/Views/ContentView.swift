@@ -44,15 +44,15 @@ struct ContentView: View {
             allowsMultipleSelection: true
         ) { result in
             switch result {
-                case .success(let urls): model.importSkillMarkdownFiles(urls: urls)
+            case .success(let urls): model.libraryState.importSkillMarkdownFiles(urls: urls)
                 case .failure(let error): print("---> import error: \(error)")
             }
         }
         .fileExporter(
             isPresented: $isExporting,
-            document: model.exportDocument,
+            document: model.packageState.exportDocument,
             contentType: .json,
-            defaultFilename: model.exportSuggestedFilename
+            defaultFilename: model.packageState.exportSuggestedFilename
         ) { result in
             switch result {
                 case .success: print("---> export successful")
@@ -60,10 +60,10 @@ struct ContentView: View {
             }
         }
         .task {
-            if model.package.skills.isEmpty, !model.selectedSkillIDs.isEmpty {
+            if model.packageState.package.skills.isEmpty, !model.selectedSkills.isEmpty {
                 model.rebuildPackageFromSelection()
-            } else if !model.package.skills.isEmpty, model.graphNodes.isEmpty {
-                model.rebuildGraph()
+            } else if !model.packageState.package.skills.isEmpty, model.graphState.graphNodes.isEmpty {
+                model.graphState.rebuildGraph(from: model.packageState.package.skills)
             }
         }
     }

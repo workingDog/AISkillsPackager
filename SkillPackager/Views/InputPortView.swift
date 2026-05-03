@@ -12,6 +12,10 @@ struct InputPortView: View {
 
     let handle: PortHandle
     let port: SkillPort
+    
+    private var isHovered: Bool {
+        model.graphState.hoveredInputPort == handle
+    }
 
     var body: some View {
         HStack(spacing: 8) {
@@ -45,7 +49,7 @@ struct InputPortView: View {
         )
         .contentShape(Capsule())
         .onTapGesture {
-            model.hoveredInputPort = handle
+            model.graphState.hoveredInputPort = handle
         }
         .background(
             GeometryReader { proxy in
@@ -57,7 +61,4 @@ struct InputPortView: View {
         )
     }
 
-    private var isHovered: Bool {
-        model.hoveredInputPort == handle
-    }
 }

@@ -24,21 +24,18 @@ struct SkillGraphEditorView: View {
         ZStack {
             background
 
-            ForEach(model.graphNodes) { node in
-                SkillNodeCard(
-                    node: node,
-                    portFrames: portFrames
-                )
+            ForEach(model.graphState.graphNodes) { node in
+                SkillNodeCard(node: node, portFrames: portFrames)
             }
 
             Canvas { context, _ in
-                for edge in model.edges {
+                for edge in model.graphState.edges {
                     drawEdge(edge, in: context)
                 }
 
-                if let start = model.dragStartPort,
+                if let start = model.graphState.dragStartPort,
                    let startFrame = portFrames[start],
-                   let current = model.dragCurrentPoint {
+                   let current = model.graphState.dragCurrentPoint {
                     let startPoint = CGPoint(x: startFrame.midX, y: startFrame.midY)
                     let path = edgePath(from: startPoint, to: current)
 
@@ -57,9 +54,9 @@ struct SkillGraphEditorView: View {
             portFrames = newFrames
         }
         .onAppear {
-            if model.graphNodes.isEmpty {
-                model.rebuildGraph()
-            }
+            if model.graphState.graphNodes.isEmpty {
+                model.graphState.rebuildGraph(from: model.packageState.package.skills)
+            } 
         }
     }
 
@@ -98,7 +95,7 @@ struct SkillGraphEditorView: View {
         let start = CGPoint(x: fromFrame.midX, y: fromFrame.midY)
         let end = CGPoint(x: toFrame.midX, y: toFrame.midY)
         let path = edgePath(from: start, to: end)
-        let issue = model.issue(for: edge.id)
+        let issue = model.graphState.issue(for: edge.id)
 
         let color: Color = {
             if let issue {

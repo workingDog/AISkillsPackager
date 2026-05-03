@@ -18,14 +18,14 @@ struct ExportPane: View {
 
         VStack(alignment: .leading, spacing: 16) {
             Text("Package Export JSON").font(.title2).bold().padding(10)
-            Picker("", selection: $model.selectedProvider) {
+            Picker("", selection: $model.packageState.selectedProvider) {
                 ForEach(ExportProvider.allCases) { provider in
                     Text(provider.rawValue).tag(provider)
                 }
             }
             .pickerStyle(.segmented)
-            .onChange(of: model.selectedProvider) {
-                renderedJSON = renderJSON(for: model.selectedProvider, model: model)
+            .onChange(of: model.packageState.selectedProvider) {
+                renderedJSON = renderJSON(for: model.packageState.selectedProvider, model: model)
             }
 
             ScrollView {
@@ -40,7 +40,7 @@ struct ExportPane: View {
         }
         .onAppear {
             if renderedJSON.isEmpty {
-                renderedJSON = renderJSON(for: model.selectedProvider, model: model)
+                renderedJSON = renderJSON(for: model.packageState.selectedProvider, model: model)
             }
         }
     }

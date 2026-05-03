@@ -13,13 +13,13 @@ struct SkillLibraryPane: View {
     @Binding var isImporting: Bool
     
     var body: some View {
-        List(model.library) { skill in
+        List(model.libraryState.library) { skill in
             Button {
                 model.toggleSelection(for: skill)
             } label: {
                 HStack(alignment: .top, spacing: 12) {
-                    Image(systemName: model.selectedSkillIDs.contains(skill.id) ? "checkmark.circle.fill" : "circle")
-                        .foregroundStyle(model.selectedSkillIDs.contains(skill.id) ? Color.green : Color.blue)
+                    Image(systemName: model.libraryState.selectedSkillIDs.contains(skill.id) ? "checkmark.circle.fill" : "circle")
+                        .foregroundStyle(model.libraryState.selectedSkillIDs.contains(skill.id) ? Color.green : Color.blue)
                         .font(.title3)
 
                     VStack(alignment: .leading, spacing: 6) {
@@ -64,7 +64,7 @@ struct SkillLibraryPane: View {
                     }
                 }
                 .buttonStyle(.glass)  
-                .disabled(model.selectedSkillIDs.isEmpty)
+                .disabled(model.libraryState.selectedSkillIDs.isEmpty)
                 .padding(.top, 20)
             }
         }

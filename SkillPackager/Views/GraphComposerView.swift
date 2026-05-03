@@ -6,6 +6,7 @@
 //
 import Foundation
 import SwiftUI
+import CoreGraphics
 
 
 struct GraphComposerView: View {
@@ -26,9 +27,9 @@ struct GraphComposerView: View {
                 )
 
             Canvas { context, _ in
-                for mapping in model.package.mappings {
-                    guard let fromNode = model.node(for: mapping.fromSkillID),
-                          let toNode = model.node(for: mapping.toSkillID) else { continue }
+                for mapping in model.packageState.package.mappings {
+                    guard let fromNode = model.graphState.node(for: mapping.fromSkillID),
+                          let toNode = model.graphState.node(for: mapping.toSkillID) else { continue }
 
                     let start = CGPoint(x: fromNode.position.cgPoint.x + 120, y: fromNode.position.cgPoint.y + 44)
                     let end = CGPoint(x: toNode.position.cgPoint.x - 120, y: toNode.position.cgPoint.y + 44)
@@ -49,15 +50,15 @@ struct GraphComposerView: View {
                 }
             }
 
-            ForEach(model.graphNodes) { node in
+            ForEach(model.graphState.graphNodes) { node in
                 GraphNodeView(node: node, skill: model.skill(for: node.skillID))
             }
         }
         .frame(minHeight: 520)
         .padding(.vertical, 8)
         .onAppear {
-            if model.graphNodes.isEmpty {
-                model.rebuildGraph()
+            if model.graphState.graphNodes.isEmpty {
+                model.graphState.rebuildGraph(from: model.packageState.package.skills)
             }
         }
     }

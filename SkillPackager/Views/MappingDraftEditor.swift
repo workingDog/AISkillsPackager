@@ -26,14 +26,14 @@ struct MappingDraftEditor: View {
                 GridRow {
                     Picker("From Skill", selection: $draftFromSkillID) {
                         Text("Select").tag(Optional<UUID>.none)
-                        ForEach(model.package.skills.sorted(by: { $0.executionOrder < $1.executionOrder }), id: \.self) { item in
+                        ForEach(model.packageState.package.skills.sorted(by: { $0.executionOrder < $1.executionOrder }), id: \.self) { item in
                             Text(item.displayName).tag(Optional(item.skillID))
                         }
                     }
 
                     Picker("To Skill", selection: $draftToSkillID) {
                         Text("Select").tag(Optional<UUID>.none)
-                        ForEach(model.package.skills.sorted(by: { $0.executionOrder < $1.executionOrder })) { item in
+                        ForEach(model.packageState.package.skills.sorted(by: { $0.executionOrder < $1.executionOrder })) { item in
                             Text(item.displayName).tag(Optional(item.skillID))
                         }
                     }

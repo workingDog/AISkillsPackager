@@ -14,14 +14,14 @@ struct EdgeInspectorView: View {
             Text("Connections")
                 .font(.headline)
 
-            if model.edges.isEmpty {
+            if model.graphState.edges.isEmpty {
                 ContentUnavailableView(
                     "No connections",
                     systemImage: "point.3.connected.trianglepath.dotted",
                     description: Text("Drag from an output port to an input port.")
                 )
             } else {
-                ForEach(model.edges) { edge in
+                ForEach(model.graphState.edges) { edge in
                     edgeRow(edge)
                 }
             }
@@ -35,7 +35,7 @@ struct EdgeInspectorView: View {
         let toSkill = model.skill(for: edge.to.skillID)
         let fromPort = model.outputPort(skillID: edge.from.skillID, portID: edge.from.portID)
         let toPort = model.inputPort(skillID: edge.to.skillID, portID: edge.to.portID)
-        let issue = model.issue(for: edge.id)
+        let issue = model.graphState.issue(for: edge.id)
 
         return HStack(alignment: .top, spacing: 12) {
             VStack(alignment: .leading, spacing: 4) {
@@ -55,7 +55,7 @@ struct EdgeInspectorView: View {
             Spacer()
 
             Button(role: .destructive) {
-                model.removeEdge(edge)
+                model.graphState.removeEdge(edge)
             } label: {
                 Image(systemName: "trash")
             }

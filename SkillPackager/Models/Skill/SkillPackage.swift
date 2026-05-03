@@ -5,6 +5,7 @@
 //  Created by Ringo Wathelet on 2026/05/01.
 //
 import SwiftUI
+import Foundation
 
 
 @MainActor

@@ -14,12 +14,12 @@ struct GraphValidationPanel: View {
             Label("Validation", systemImage: "checklist")
                 .font(.headline)
 
-            if model.validationIssues.isEmpty {
+            if model.graphState.validationIssues.isEmpty {
                 Label("No validation issues", systemImage: "checkmark.circle.fill")
                     .foregroundStyle(.green)
                     .font(.subheadline)
             } else {
-                ForEach(model.validationIssues) { issue in
+                ForEach(model.graphState.validationIssues) { issue in
                     HStack(alignment: .top, spacing: 8) {
                         Image(systemName: issue.severity == .error ? "exclamationmark.triangle.fill" : "info.circle.fill")
                             .foregroundStyle(issue.severity == .error ? .red : .orange)

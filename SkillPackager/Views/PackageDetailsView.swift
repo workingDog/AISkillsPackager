@@ -8,7 +8,6 @@ import Foundation
 import SwiftUI
 
 
-
 struct PackageDetailsView: View {
     @Environment(SkillComposerModel.self) private var model
     @Binding var isExporting: Bool
@@ -20,12 +19,12 @@ struct PackageDetailsView: View {
             VStack(alignment: .leading, spacing: 20) {
                 GroupBox("Package") {
                     VStack(alignment: .leading, spacing: 12) {
-                        TextField("Package name", text: $bindableModel.package.name)
+                        TextField("Package name", text: $bindableModel.packageState.package.name)
 
-                        TextField("Global instructions", text: $bindableModel.package.globalInstructions, axis: .vertical)
+                        TextField("Global instructions", text: $bindableModel.packageState.package.globalInstructions, axis: .vertical)
                             .lineLimit(3...6)
 
-                        Text("\(bindableModel.package.skills.count) skills selected")
+                        Text("\(bindableModel.packageState.package.skills.count) skills selected")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
@@ -33,7 +32,7 @@ struct PackageDetailsView: View {
                 }
 
                 GroupBox("Selected Skills") {
-                    if bindableModel.package.skills.isEmpty {
+                    if bindableModel.packageState.package.skills.isEmpty {
                         ContentUnavailableView(
                             "No skills selected",
                             systemImage: "square.stack.3d.up.slash",
@@ -41,7 +40,7 @@ struct PackageDetailsView: View {
                         )
                     } else {
                         VStack(alignment: .leading, spacing: 12) {
-                            ForEach(bindableModel.package.skills.sorted(by: { $0.executionOrder < $1.executionOrder })) { item in
+                            ForEach(bindableModel.packageState.package.skills.sorted(by: { $0.executionOrder < $1.executionOrder })) { item in
                                 PackagedSkillCard(packagedSkill: item)
                             }
                         }
@@ -54,11 +53,11 @@ struct PackageDetailsView: View {
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
 
-                        if bindableModel.edges.isEmpty {
+                        if bindableModel.graphState.edges.isEmpty {
                             Label("No graph connections yet", systemImage: "point.3.connected.trianglepath.dotted")
                                 .foregroundStyle(.secondary)
                         } else {
-                            ForEach(bindableModel.edges) { edge in
+                            ForEach(bindableModel.graphState.edges) { edge in
                                 EdgeSummaryRow(edge: edge)
                             }
                         }
@@ -66,12 +65,12 @@ struct PackageDetailsView: View {
                 }
 
                 GroupBox("Validation") {
-                    if bindableModel.validationIssues.isEmpty {
+                    if bindableModel.graphState.validationIssues.isEmpty {
                         Label("No validation issues", systemImage: "checkmark.circle.fill")
                             .foregroundStyle(.green)
                     } else {
                         VStack(alignment: .leading, spacing: 8) {
-                            ForEach(bindableModel.validationIssues) { issue in
+                            ForEach(bindableModel.graphState.validationIssues) { issue in
                                 HStack(alignment: .top, spacing: 8) {
                                     Image(systemName: issue.severity == .error ? "exclamationmark.triangle.fill" : "info.circle.fill")
                                         .foregroundStyle(issue.severity == .error ? .red : .orange)
@@ -93,27 +92,27 @@ struct PackageDetailsView: View {
                     }
                     .frame(minHeight: 240, alignment: .topLeading)
                 }
-
-                HStack {
-                    Button("Rebuild Graph") {
-                        bindableModel.rebuildGraph()
-                    }
-
-                    Spacer()
-
-                    Button("Export Package") {
-                        do {
-                            try bindableModel.prepareExport()
-                            isExporting = true
-                        } catch {
-                            print("Export failed: \(error)")
-                        }
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .disabled(bindableModel.package.skills.isEmpty)
-                }
             }
             .padding(20)
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .automatic) {
+                Button("Export Package") {
+                    do {
+                        try bindableModel.prepareExport()
+                        isExporting = true
+                    } catch {
+                        print("Export failed: \(error)")
+                    }
+                }.buttonStyle(.glass)
+                .disabled(bindableModel.packageState.package.skills.isEmpty)
+                .padding(8)
+                
+                Button("Rebuild Graph") {
+                    bindableModel.graphState.rebuildGraph(from: model.packageState.package.skills)
+                }.buttonStyle(.glass)
+                .padding(8)
+            }
         }
     }
 }
@@ -128,7 +127,7 @@ struct EdgeSummaryRow: View {
         let toSkill = model.skill(for: edge.to.skillID)
         let fromPort = model.outputPort(skillID: edge.from.skillID, portID: edge.from.portID)
         let toPort = model.inputPort(skillID: edge.to.skillID, portID: edge.to.portID)
-        let issue = model.issue(for: edge.id)
+        let issue = model.graphState.issue(for: edge.id)
 
         HStack(alignment: .top, spacing: 12) {
             VStack(alignment: .leading, spacing: 4) {
@@ -155,7 +154,7 @@ struct EdgeSummaryRow: View {
             Spacer()
 
             Button(role: .destructive) {
-                model.removeEdge(edge)
+                model.graphState.removeEdge(edge)
             } label: {
                 Image(systemName: "trash")
             }
