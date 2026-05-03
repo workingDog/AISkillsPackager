@@ -36,14 +36,18 @@ struct PackageDetailsView: View {
                         ContentUnavailableView(
                             "No skills selected",
                             systemImage: "square.stack.3d.up.slash",
-                            description: Text("Choose skills in the library, then build the package.")
+                            description: Text("Choose skills in the library.")
                         )
                     } else {
-                        VStack(alignment: .leading, spacing: 12) {
+                        List {
                             ForEach(bindableModel.packageState.package.skills.sorted(by: { $0.executionOrder < $1.executionOrder })) { item in
                                 PackagedSkillCard(packagedSkill: item)
+                                    .listRowSeparator(.hidden)
                             }
+                            .onMove(perform: bindableModel.moveSkill)
                         }
+                        .listStyle(.plain)
+                        .frame(minHeight: 260)
                     }
                 }
 
@@ -106,11 +110,6 @@ struct PackageDetailsView: View {
                     }
                 }.buttonStyle(.glass)
                 .disabled(bindableModel.packageState.package.skills.isEmpty)
-                .padding(8)
-                
-                Button("Rebuild Graph") {
-                    bindableModel.graphState.rebuildGraph(from: model.packageState.package.skills)
-                }.buttonStyle(.glass)
                 .padding(8)
             }
         }

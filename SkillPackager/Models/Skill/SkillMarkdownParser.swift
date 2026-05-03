@@ -162,15 +162,15 @@ struct SkillMarkdownParser {
             .lowercased() ?? "text"
 
         return switch raw {
-        case "text", "string": .text
-        case "markdown", "md": .markdown
-        case "json": .json
-        case "image": .image
-        case "audio": .audio
-        case "number", "int", "float", "double": .number
-        case "boolean", "bool": .boolean
-        case "any": .any
-        default: .text
+            case "text", "string": .text
+            case "markdown", "md": .markdown
+            case "json": .json
+            case "image": .image
+            case "audio": .audio
+            case "number", "int", "float", "double": .number
+            case "boolean", "bool": .boolean
+            case "any": .any
+            default: .text
         }
     }
 

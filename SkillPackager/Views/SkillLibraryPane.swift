@@ -54,18 +54,6 @@ struct SkillLibraryPane: View {
                     }
                 }.buttonStyle(.glass)
                 .padding(.top, 20)
-                
-                Button {
-                    model.rebuildPackageFromSelection()
-                } label: {
-                    VStack {
-                        Text("Build")
-                        Text("Package")
-                    }
-                }
-                .buttonStyle(.glass)  
-                .disabled(model.libraryState.selectedSkillIDs.isEmpty)
-                .padding(.top, 20)
             }
         }
     }
@@ -83,4 +71,3 @@ struct SkillLibraryPane: View {
     }
     
 }
-

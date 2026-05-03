@@ -37,8 +37,40 @@ final class SkillComposerModel {
         libraryState.toggleSelection(for: skill)
         rebuildPackageFromSelection()
     }
-
+    
     func rebuildPackageFromSelection() {
+        let orderedSelectedSkills = selectedSkills.sorted {
+            $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending
+        }
+
+        let existingInstructionsBySkillID = Dictionary(
+            uniqueKeysWithValues: packageState.package.skills.map { ($0.skillID, $0.localInstructions) }
+        )
+
+        packageState.package.skills = orderedSelectedSkills.enumerated().map { index, skill in
+            PackagedSkill(
+                skillID: skill.id,
+                displayName: skill.name,
+                localInstructions: existingInstructionsBySkillID[skill.id] ?? skill.usageInstructions,
+                executionOrder: index
+            )
+        }
+
+        let validSkillIDs = Set(orderedSelectedSkills.map(\.id))
+        graphState.edges.removeAll {
+            !validSkillIDs.contains($0.from.skillID) || !validSkillIDs.contains($0.to.skillID)
+        }
+
+        if graphState.edges.isEmpty {
+            graphState.edges = buildDefaultEdges(for: orderedSelectedSkills)
+        }
+
+        graphState.rebuildGraph(from: packageState.package.skills)
+        validateEdges()
+    }
+
+    
+    func rebuildPackageFromSelection2() {
         let orderedSelectedSkills = selectedSkills.sorted {
             $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending
         }
@@ -290,6 +322,17 @@ extension SkillComposerModel {
             to: PortHandle(skillID: toSkillID, portID: toPort.id, side: .input),
             transform: transform
         )
+    }
+    
+    func moveSkill(from offsets: IndexSet, to destination: Int) {
+        packageState.package.skills.move(fromOffsets: offsets, toOffset: destination)
+
+        for (index, skill) in packageState.package.skills.enumerated() {
+            skill.executionOrder = index
+        }
+
+        graphState.rebuildGraph(from: packageState.package.skills)
+        validateEdges()
     }
 }
 

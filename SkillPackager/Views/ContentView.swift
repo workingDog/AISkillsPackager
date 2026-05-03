@@ -24,7 +24,7 @@ struct ContentView: View {
         NavigationSplitView {
             SkillLibraryPane(isImporting: $isImporting)
                 .navigationTitle("Skills")
-                .navigationSplitViewColumnWidth(min: 380, ideal: 380, max: 480)
+                .navigationSplitViewColumnWidth(min: 300, ideal: 300, max: 450)
                 .background(sidebarBackground)
         } content: {
             PackageSectionPane(selectedSection: $selectedSection)
