@@ -3,7 +3,7 @@
 
 in progress
 
-An experiment to learn about **AI skills and agents**, and packaging these into 
+**An experiment** to learn about **AI skills and agents**, and packaging these into 
 a package manifest with combined instructions ready for a AI model to use, for example using the REST API of Google Gemini.
 
 ## User interface
@@ -59,7 +59,7 @@ Export that package in different forms:
 
 todo
 
-Reordering of the **Selected Skills** in the **Details** view can be done by dragging a skill to a new location.
+Reordering of the **Selected Skills** in the **Details** view can be done by dragging a skill to a new position within the list.
 
 <p float="left">
     <img src="picture1.png" width="400" height="500" /> 

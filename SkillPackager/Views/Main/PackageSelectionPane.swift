@@ -17,6 +17,7 @@ struct PackageSectionPane: View {
             Label(section.title, systemImage: section.systemImage)
                 .tag(section)
                 .listRowBackground(Color.clear)
+                .font(.title2)
         }
         .scrollContentBackground(.hidden)
     }

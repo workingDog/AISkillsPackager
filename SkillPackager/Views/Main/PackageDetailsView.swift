@@ -10,6 +10,8 @@ import SwiftUI
 
 struct PackageDetailsView: View {
     @Environment(SkillComposerModel.self) private var model
+    @Environment(InterfaceManager.self) var interface
+    
     @Binding var isExporting: Bool
 
     var body: some View {
@@ -17,22 +19,26 @@ struct PackageDetailsView: View {
 
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                GroupBox("Package") {
+                GroupBox {
                     VStack(alignment: .leading, spacing: 12) {
                         TextField("Package name", text: $bindableModel.packageState.package.name)
 
-                        TextField("Global instructions", text: $bindableModel.packageState.package.globalInstructions, axis: .vertical)
+                        TextField("Global instructions",
+                                  text: $bindableModel.packageState.package.globalInstructions,
+                                  axis: .vertical)
                             .lineLimit(3...6)
 
                         Text("\(bindableModel.packageState.package.skills.count) skills selected")
-                            .font(.caption)
+                            .font(.caption2)
                             .foregroundStyle(.secondary)
                     }
                     .textFieldStyle(.roundedBorder)
+                } label: {
+                    Text("Package").font(.headline)
                 }
-                .background(Color.gray.opacity(0.3), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+                .background(Color.gray.opacity(0.3), in: RoundedRectangle(cornerRadius: 14))
 
-                GroupBox("Selected Skills") {
+                GroupBox {
                     if bindableModel.packageState.package.skills.isEmpty {
                         ContentUnavailableView(
                             "No skills selected",
@@ -50,9 +56,11 @@ struct PackageDetailsView: View {
                         .listStyle(.plain)
                         .frame(minHeight: 260)
                     }
+                } label: {
+                    Text("Selected Skills").font(.headline)
                 }
 
-                GroupBox("Mappings") {
+                GroupBox {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Mappings are now created and edited in the Graph tab by dragging from output ports to input ports.")
                             .font(.subheadline)
@@ -67,10 +75,12 @@ struct PackageDetailsView: View {
                             }
                         }
                     }
+                } label: {
+                    Text("Mappings").font(.headline)
                 }
                 .background(Color.gray.opacity(0.3), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
 
-                GroupBox("Validation") {
+                GroupBox {
                     if bindableModel.graphState.validationIssues.isEmpty {
                         Label("No validation issues", systemImage: "checkmark.circle.fill")
                             .foregroundStyle(.green)
@@ -87,17 +97,21 @@ struct PackageDetailsView: View {
                             }
                         }
                     }
+                } label: {
+                    Text("Validation").font(.headline)
                 }
                 .background(Color.gray.opacity(0.3), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
 
-                GroupBox("Compiled Instructions Preview") {
+                GroupBox {
                     ScrollView(.horizontal) {
                         Text(bindableModel.compiledInstructions())
-                            .font(.system(.footnote, design: .monospaced))
+                            .font(.system(size: CGFloat(interface.textSize), design: .monospaced))
                             .textSelection(.enabled)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     .frame(minHeight: 240, alignment: .topLeading)
+                } label: {
+                    Text("Instructions Preview").font(.headline)
                 }
                 .background(Color.gray.opacity(0.2), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
             }
