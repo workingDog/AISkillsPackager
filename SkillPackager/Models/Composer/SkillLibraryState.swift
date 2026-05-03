@@ -39,15 +39,22 @@ final class SkillLibraryState {
                 || url.pathExtension.lowercased() == "md"
             else { continue }
 
+            let didAccess = url.startAccessingSecurityScopedResource()
+            defer {
+                if didAccess {
+                    url.stopAccessingSecurityScopedResource()
+                }
+            }
+
             do {
                 let skill = try parser.parseFile(at: url)
                 if !library.contains(where: { $0.sourceURL == url }) {
                     library.append(skill)
                 }
             } catch {
-                print("Import failed for \(url.lastPathComponent): \(error)")
+                print("----> Import failed for \(url.lastPathComponent): \(error)")
             }
         }
     }
-}
 
+}

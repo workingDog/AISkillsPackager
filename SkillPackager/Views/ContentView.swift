@@ -44,8 +44,10 @@ struct ContentView: View {
             allowsMultipleSelection: true
         ) { result in
             switch result {
-            case .success(let urls): model.libraryState.importSkillMarkdownFiles(urls: urls)
-                case .failure(let error): print("---> import error: \(error)")
+                case .success(let urls):
+                    model.libraryState.importSkillMarkdownFiles(urls: urls)
+                case .failure(let error):
+                    print("---> import error: \(error)")
             }
         }
         .fileExporter(
