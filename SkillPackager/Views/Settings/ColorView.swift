@@ -75,14 +75,16 @@ struct ColorView: View {
             Picker("", selection: $interface.selectedColor) {
                 Text("Back").tag(ColorType.back)
                 Text("Text").tag(ColorType.text)
-                Text("LeftPanel").tag(ColorType.leftPanel)
+                Text("Tools").tag(ColorType.tools)
             }
             .pickerStyle(.segmented)
+            .padding(10)
             
             Picker("", selection: $interface.selectedColor) {
-                Text("MidPanel").tag(ColorType.midPanel)
-                Text("RightPanel").tag(ColorType.rightPanel)
-                Text("Tools").tag(ColorType.tools)
+                Text("Left Panel").tag(ColorType.leftPanel)
+                Text("Center Panel").tag(ColorType.midPanel)
+                Text("Right Panel").tag(ColorType.rightPanel)
+                
             }
             .pickerStyle(.segmented)
         }

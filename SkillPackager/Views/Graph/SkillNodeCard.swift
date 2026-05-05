@@ -31,10 +31,7 @@ struct SkillNodeCard: View {
                 .stroke(.black.opacity(0.08), lineWidth: 1)
         )
         .shadow(color: .black.opacity(0.05), radius: 4, y: 2)
-        .position(
-            x: node.position.x,
-            y: node.position.y
-        )
+        .position(x: node.position.x, y: node.position.y)
     }
 
     private var header: some View {
