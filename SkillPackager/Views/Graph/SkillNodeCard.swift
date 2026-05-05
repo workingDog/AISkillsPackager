@@ -13,7 +13,7 @@ struct SkillNodeCard: View {
     let node: SkillGraphNode
     let portFrames: [PortHandle: CGRect]
 
-    @State private var dragOffset: CGSize = .zero
+    @State private var dragAnchorOffset: CGSize?
 
     var body: some View {
         VStack(spacing: 0) {
@@ -32,8 +32,8 @@ struct SkillNodeCard: View {
         )
         .shadow(color: .black.opacity(0.05), radius: 4, y: 2)
         .position(
-            x: node.position.x + dragOffset.width,
-            y: node.position.y + dragOffset.height
+            x: node.position.x,
+            y: node.position.y
         )
     }
 
@@ -63,16 +63,29 @@ struct SkillNodeCard: View {
         )
         .contentShape(Rectangle())
         .gesture(
-            DragGesture()
+            DragGesture(minimumDistance: 0, coordinateSpace: .named("graph-space"))
                 .onChanged { value in
-                    dragOffset = value.translation
+                    if dragAnchorOffset == nil {
+                        dragAnchorOffset = CGSize(
+                            width: value.startLocation.x - node.position.x,
+                            height: value.startLocation.y - node.position.y
+                        )
+                    }
+
+                    guard let dragAnchorOffset else { return }
+
+                    var transaction = Transaction()
+                    transaction.disablesAnimations = true
+
+                    withTransaction(transaction) {
+                        node.position = GraphPoint(
+                            x: value.location.x - dragAnchorOffset.width,
+                            y: value.location.y - dragAnchorOffset.height
+                        )
+                    }
                 }
-                .onEnded { value in
-                    node.position = GraphPoint(
-                        x: node.position.x + value.translation.width,
-                        y: node.position.y + value.translation.height
-                    )
-                    dragOffset = .zero
+                .onEnded { _ in
+                    dragAnchorOffset = nil
                 }
         )
     }
