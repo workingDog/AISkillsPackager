@@ -102,7 +102,7 @@ final class SkillDefinition: Identifiable, Hashable {
                 SkillPort(name: "query", type: .text, isRequired: true)
             ],
             declaredOutputs: [
-                SkillPort(name: "findings", type: .json, isRequired: true)
+                SkillPort(name: "findings", type: .markdown, isRequired: true)
             ],
             usageInstructions: "Use when current external information is needed."
         ),
@@ -111,12 +111,24 @@ final class SkillDefinition: Identifiable, Hashable {
             summary: "Turns findings into a structured outline.",
             markdown: "# Outline Writer",
             declaredInputs: [
-                SkillPort(name: "findings", type: .json, isRequired: true)
+                SkillPort(name: "findings", type: .text, isRequired: true)
             ],
             declaredOutputs: [
                 SkillPort(name: "outline", type: .markdown, isRequired: true)
             ],
             usageInstructions: "Use after research."
+        ),
+        SkillDefinition(
+            name: "Words tester",
+            summary: "Check the list of words",
+            markdown: "# Words tester",
+            declaredInputs: [
+                SkillPort(name: "outline", type: .text, isRequired: true)
+            ],
+            declaredOutputs: [
+                SkillPort(name: "query", type: .text, isRequired: true)
+            ],
+            usageInstructions: "Use whenever"
         ),
         SkillDefinition(
             name: "Image Generator",

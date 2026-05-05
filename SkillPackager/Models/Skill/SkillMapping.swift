@@ -8,6 +8,15 @@ import SwiftUI
 import Foundation
 
 
+
+struct DraftMapping: Hashable {
+    var fromSkillID: UUID?
+    var fromPortID: UUID?
+    var toSkillID: UUID?
+    var toPortID: UUID?
+    var transform: String = ""
+}
+
 @MainActor
 @Observable
 final class SkillMapping: Identifiable, Hashable {

@@ -56,7 +56,7 @@ struct SkillGraphEditorView: View {
         .onAppear {
             if model.graphState.graphNodes.isEmpty {
                 model.graphState.rebuildGraph(from: model.packageState.package.skills)
-            } 
+            }
         }
     }
 
@@ -96,18 +96,19 @@ struct SkillGraphEditorView: View {
         let end = CGPoint(x: toFrame.midX, y: toFrame.midY)
         let path = edgePath(from: start, to: end)
         let issue = model.graphState.issue(for: edge.id)
+        let isSelected = model.graphState.selectedEdgeID == edge.id
 
         let color: Color = {
             if let issue {
                 return issue.severity == .error ? .red : .orange
             }
-            return .accentColor
+            return isSelected ? .green : .accentColor
         }()
 
         context.stroke(
             path,
-            with: .color(color.opacity(0.85)),
-            style: StrokeStyle(lineWidth: 4, lineCap: .round)
+            with: .color(color.opacity(0.9)),
+            style: StrokeStyle(lineWidth: isSelected ? 6 : 4, lineCap: .round)
         )
     }
 

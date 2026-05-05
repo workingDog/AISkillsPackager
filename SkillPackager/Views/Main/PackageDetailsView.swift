@@ -10,8 +10,7 @@ import SwiftUI
 
 struct PackageDetailsView: View {
     @Environment(SkillComposerModel.self) private var model
-    @Environment(InterfaceManager.self) var interface
-    
+    @Environment(InterfaceManager.self) private var interface
     @Binding var isExporting: Bool
 
     var body: some View {
@@ -23,10 +22,12 @@ struct PackageDetailsView: View {
                     VStack(alignment: .leading, spacing: 12) {
                         TextField("Package name", text: $bindableModel.packageState.package.name)
 
-                        TextField("Global instructions",
-                                  text: $bindableModel.packageState.package.globalInstructions,
-                                  axis: .vertical)
-                            .lineLimit(3...6)
+                        TextField(
+                            "Global instructions",
+                            text: $bindableModel.packageState.package.globalInstructions,
+                            axis: .vertical
+                        )
+                        .lineLimit(3...6)
 
                         Text("\(bindableModel.packageState.package.skills.count) skills selected")
                             .font(.caption2)
@@ -61,17 +62,39 @@ struct PackageDetailsView: View {
                 }
 
                 GroupBox {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Mappings are now created and edited in the Graph tab by dragging from output ports to input ports.")
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Mappings can be created in text form here or visually in the Graph tab.")
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
 
+                        HStack {
+                            Button("New Mapping") {
+                                bindableModel.beginNewMapping()
+                            }
+                            .buttonStyle(.borderedProminent)
+
+                            if bindableModel.graphState.draftMapping != nil {
+                                Button("Cancel") {
+                                    bindableModel.cancelNewMapping()
+                                }
+                                .buttonStyle(.bordered)
+                            }
+                        }
+
+                        if bindableModel.graphState.draftMapping != nil {
+                            MappingDraftEditor()
+                        }
+
+                        Text("Mapping list")
+                            .font(.headline)
+                            .foregroundStyle(.secondary)
+                        
                         if bindableModel.graphState.edges.isEmpty {
                             Label("No graph connections yet", systemImage: "point.3.connected.trianglepath.dotted")
                                 .foregroundStyle(.secondary)
                         } else {
                             ForEach(bindableModel.graphState.edges) { edge in
-                                EdgeSummaryRow(edge: edge)
+                                MappingEditorRow(edge: edge)
                             }
                         }
                     }
@@ -126,58 +149,11 @@ struct PackageDetailsView: View {
                     } catch {
                         print("Export failed: \(error)")
                     }
-                }.buttonStyle(.glass)
+                }
+                .buttonStyle(.glass)
                 .disabled(bindableModel.packageState.package.skills.isEmpty)
                 .padding(8)
             }
         }
-    }
-}
-
-struct EdgeSummaryRow: View {
-    @Environment(SkillComposerModel.self) private var model
-
-    let edge: SkillEdge
-
-    var body: some View {
-        let fromSkill = model.skill(for: edge.from.skillID)
-        let toSkill = model.skill(for: edge.to.skillID)
-        let fromPort = model.outputPort(skillID: edge.from.skillID, portID: edge.from.portID)
-        let toPort = model.inputPort(skillID: edge.to.skillID, portID: edge.to.portID)
-        let issue = model.graphState.issue(for: edge.id)
-
-        HStack(alignment: .top, spacing: 12) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text("\(fromSkill?.name ?? "Unknown").\(fromPort?.name ?? "?")")
-                    .font(.subheadline.weight(.medium))
-
-                Text("to \(toSkill?.name ?? "Unknown").\(toPort?.name ?? "?")")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-
-                if !edge.transform.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                    Text("Transform: \(edge.transform)")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-
-                if let issue {
-                    Label(issue.message, systemImage: issue.severity == .error ? "exclamationmark.triangle.fill" : "info.circle.fill")
-                        .font(.caption)
-                        .foregroundStyle(issue.severity == .error ? .red : .orange)
-                }
-            }
-
-            Spacer()
-
-            Button(role: .destructive) {
-                model.graphState.removeEdge(edge)
-            } label: {
-                Image(systemName: "trash")
-            }
-            .buttonStyle(.borderless)
-        }
-        .padding(10)
-        .background(Color.black.opacity(0.03), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
     }
 }

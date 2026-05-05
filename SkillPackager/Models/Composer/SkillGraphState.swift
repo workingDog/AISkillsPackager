@@ -6,6 +6,7 @@
 //
 import Foundation
 import SwiftUI
+import CoreGraphics
 
 
 @Observable
@@ -20,12 +21,19 @@ final class SkillGraphState {
 
     var validationIssues: [EdgeValidationIssue] = []
 
+    var selectedEdgeID: UUID?
+    var draftMapping: DraftMapping?
+
     func node(for skillID: UUID) -> SkillGraphNode? {
         graphNodes.first(where: { $0.skillID == skillID })
     }
-    
+
     func issue(for edgeID: UUID) -> EdgeValidationIssue? {
         validationIssues.first(where: { $0.edgeID == edgeID })
+    }
+
+    func edge(for id: UUID) -> SkillEdge? {
+        edges.first(where: { $0.id == id })
     }
 
     func rebuildGraph(from packagedSkills: [PackagedSkill]) {
@@ -79,7 +87,17 @@ final class SkillGraphState {
 
     func removeEdge(_ edge: SkillEdge) {
         edges.removeAll { $0.id == edge.id }
+        if selectedEdgeID == edge.id {
+            selectedEdgeID = nil
+        }
+    }
+
+    func beginNewMapping() {
+        selectedEdgeID = nil
+        draftMapping = DraftMapping()
+    }
+
+    func cancelNewMapping() {
+        draftMapping = nil
     }
 }
-
-
