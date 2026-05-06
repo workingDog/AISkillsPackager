@@ -35,7 +35,8 @@ struct DisplaySkills: View {
                     Text("Preview").tag(false)
                 }.pickerStyle(.segmented)
                 Button("Save edit") {
-                    // do save
+                    // do save  todo
+                    print("----> DisplaySkills save edit TODO")
                 }.buttonStyle(.glass)
                     .disabled(!isEditing)
             }

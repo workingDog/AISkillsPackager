@@ -6,6 +6,7 @@
 //
 import SwiftUI
 
+
 struct EdgeInspectorView: View {
     @Environment(SkillComposerModel.self) private var model
 
@@ -65,5 +66,3 @@ struct EdgeInspectorView: View {
         .background(Color.black.opacity(0.03), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
     }
 }
-
-

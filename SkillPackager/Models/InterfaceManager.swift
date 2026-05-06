@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 
 
-
 @Observable class InterfaceManager {
     
     // UI colors

@@ -6,26 +6,14 @@
 ////
 //
 import Foundation
-import SwiftData
 import SwiftUI
 import UniformTypeIdentifiers
 
 
-
-//@Model
-//final class Item {
-//    var timestamp: Date
-//    
-//    init(timestamp: Date) {
-//        self.timestamp = timestamp
-//    }
-//}
-//
-//
-
 struct PackageManifest: Codable {
     
-    struct SkillNode: Codable {
+    struct SkillNode: Identifiable, Codable {
+        let id = UUID()
         var skillID: UUID
         var displayName: String
         var executionOrder: Int
@@ -33,14 +21,24 @@ struct PackageManifest: Codable {
         var inputs: [SkillPort]
         var outputs: [SkillPort]
         var markdown: String
+        
+        enum CodingKeys: String, CodingKey {
+            case skillID, displayName, executionOrder, localInstructions
+            case inputs, outputs, markdown
+        }
     }
 
-    struct MappingNode: Codable {
+    struct MappingNode: Identifiable, Codable {
+        let id = UUID()
         var fromSkillID: UUID
         var fromOutput: String
         var toSkillID: UUID
         var toInput: String
         var transform: String
+        
+        enum CodingKeys: String, CodingKey {
+            case fromSkillID, fromOutput, toSkillID, toInput, transform
+        }
     }
 
     var name: String

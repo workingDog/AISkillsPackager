@@ -7,7 +7,6 @@
 import SwiftUI
 
 
-
 struct OutputPortView: View {
     @Environment(SkillComposerModel.self) private var model
 

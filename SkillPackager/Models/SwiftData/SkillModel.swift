@@ -9,7 +9,6 @@ import SwiftUI
 import SwiftData
 
 
-
 @Model
 final class SkillModel {
     @Attribute(.unique) var skillid: UUID

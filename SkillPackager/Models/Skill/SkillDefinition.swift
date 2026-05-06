@@ -6,6 +6,7 @@
 //
 import SwiftUI
 
+// the types in mapping the input and output ports, use in the markdown parser
 enum SkillDataType: String, Codable, CaseIterable, Hashable, Sendable {
     case text
     case markdown
@@ -18,15 +19,15 @@ enum SkillDataType: String, Codable, CaseIterable, Hashable, Sendable {
 
     var color: Color {
         switch self {
-        case .text: .blue
-        case .markdown: .indigo
-        case .json: .orange
-        case .image: .pink
-        case .audio: .purple
-        case .number: .green
-        case .boolean: .mint
-        case .any: .gray
-        }
+            case .text: .blue
+            case .markdown: .indigo
+            case .json: .orange
+            case .image: .pink
+            case .audio: .purple
+            case .number: .green
+            case .boolean: .mint
+            case .any: .gray
+            }
     }
 
     func accepts(_ other: SkillDataType) -> Bool {
@@ -40,12 +41,7 @@ struct SkillPort: Identifiable, Hashable, Codable, Sendable {
     var type: SkillDataType
     var isRequired: Bool
 
-    init(
-        id: UUID = UUID(),
-        name: String,
-        type: SkillDataType,
-        isRequired: Bool = false
-    ) {
+    init(id: UUID = UUID(), name: String, type: SkillDataType, isRequired: Bool = false) {
         self.id = id
         self.name = name
         self.type = type

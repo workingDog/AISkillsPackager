@@ -8,14 +8,25 @@ import Foundation
 
 
 struct OpenAIResponsesRequest: Codable {
-    struct InputItem: Codable {
+    
+    struct InputItem: Identifiable, Codable {
+        let id = UUID()
         let role: String
         let content: [ContentItem]
+        
+        enum CodingKeys: String, CodingKey {
+            case role, content
+        }
     }
 
-    struct ContentItem: Codable {
+    struct ContentItem: Identifiable, Codable {
+        let id = UUID()
         let type: String
         let text: String
+        
+        enum CodingKeys: String, CodingKey {
+            case type, text
+        }
     }
 
     let model: String
@@ -24,13 +35,19 @@ struct OpenAIResponsesRequest: Codable {
 }
 
 struct GeminiGenerateContentRequest: Codable {
+    
     struct Content: Codable {
         let role: String?
         let parts: [Part]
     }
 
-    struct Part: Codable {
+    struct Part: Identifiable, Codable {
+        let id = UUID()
         let text: String
+        
+        enum CodingKeys: String, CodingKey {
+            case text
+        }
     }
 
     struct GenerationConfig: Codable {

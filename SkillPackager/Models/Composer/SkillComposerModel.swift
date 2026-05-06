@@ -259,6 +259,7 @@ final class SkillComposerModel {
 
 @MainActor
 extension SkillComposerModel {
+    
     func selectEdge(_ edge: SkillEdge) {
         graphState.selectedEdgeID = edge.id
         graphState.draftMapping = nil

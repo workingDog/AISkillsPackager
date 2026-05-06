@@ -19,7 +19,7 @@ Functions
 -   loads SKILL.md files into a library
 -   select skills into a package
 -   defines input/output mappings between selected skills
--   compiles and exports a package manifest with combined instructions
+-   create and exports a package manifest with combined instructions
 
 
 ## Overview
@@ -28,13 +28,13 @@ Compose a set of skills ready for exporting as a manifest + combined instruction
 
 1   Skill Library
 
--   store/import existing SKILL.md files
--   parse lightweight metadata
+-   stored/imported existing SKILL.md files
+-   parse SKILL and metadata
 -   show them in a selectable list
 
 2   Skill Composition
 
--   Let the user create a package made of selected skills plus explicit input/output mappings between them.
+-   User create a package made of selected skills plus explicit input/output mappings between them.
 
 3   Packaging
 
@@ -44,15 +44,14 @@ Generate one portable package object:
 -   usage instructions for each skill
 -   execution order
 -   input/output mapping rules
--   final merged prompt/instruction text for ChatGPT, Gemini, ...
+-   final merged prompt/instruction text for Gemini, ChatGPT ...
 
-4   Target Exporters
+4   Package Exporting
 
-Export that package in different forms:
+Export the package for different AI models:
 
--   API prompt bundle for OpenAI/Gemini
--   internal app format
--   zip/folder/catalogue manifest for reuse
+-   format for Gemini, OpenAI
+-   zip/folder/catalogue manifest for reuse... todo
 
 
 ## Usage

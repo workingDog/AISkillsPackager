@@ -6,6 +6,7 @@
 //
 import SwiftUI
 
+
 struct GraphValidationPanel: View {
     @Environment(SkillComposerModel.self) private var model
 
@@ -35,4 +36,3 @@ struct GraphValidationPanel: View {
         .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
     }
 }
-
