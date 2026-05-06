@@ -27,11 +27,7 @@ struct SkillGraphEditorView: View {
             background
 
             ForEach(model.graphState.graphNodes) { node in
-                SkillNodeCard(
-                    node: node,
-                    portFrames: portFrames,
-                    zoomScale: zoomScale
-                )
+                SkillNodeCard(node: node, portFrames: portFrames, zoomScale: zoomScale)
             }
 
             Canvas { context, _ in
@@ -42,6 +38,7 @@ struct SkillGraphEditorView: View {
                 if let start = model.graphState.dragStartPort,
                    let startFrame = portFrames[start],
                    let current = model.graphState.dragCurrentPoint {
+                    
                     let startPoint = CGPoint(x: startFrame.midX, y: startFrame.midY)
                     let path = edgePath(from: startPoint, to: current)
 
