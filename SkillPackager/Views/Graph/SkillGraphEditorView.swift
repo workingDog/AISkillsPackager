@@ -6,6 +6,7 @@
 //
 import SwiftUI
 
+
 struct PortFramePreferenceKey: PreferenceKey {
     static var defaultValue: [PortHandle: CGRect] = [:]
 
@@ -19,13 +20,18 @@ struct SkillGraphEditorView: View {
     @State private var portFrames: [PortHandle: CGRect] = [:]
 
     let canvasSize: CGSize
+    let zoomScale: CGFloat
 
     var body: some View {
         ZStack {
             background
 
             ForEach(model.graphState.graphNodes) { node in
-                SkillNodeCard(node: node, portFrames: portFrames)
+                SkillNodeCard(
+                    node: node,
+                    portFrames: portFrames,
+                    zoomScale: zoomScale
+                )
             }
 
             Canvas { context, _ in
@@ -50,6 +56,9 @@ struct SkillGraphEditorView: View {
         }
         .frame(width: canvasSize.width, height: canvasSize.height)
         .coordinateSpace(name: "graph-space")
+        .transaction { transaction in
+            transaction.animation = nil
+        }
         .onPreferenceChange(PortFramePreferenceKey.self) { newFrames in
             portFrames = newFrames
         }

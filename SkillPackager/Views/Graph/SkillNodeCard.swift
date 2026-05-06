@@ -12,6 +12,7 @@ struct SkillNodeCard: View {
 
     let node: SkillGraphNode
     let portFrames: [PortHandle: CGRect]
+    let zoomScale: CGFloat
 
     @State private var dragAnchorOffset: CGSize?
 
@@ -31,7 +32,10 @@ struct SkillNodeCard: View {
                 .stroke(.black.opacity(0.08), lineWidth: 1)
         )
         .shadow(color: .black.opacity(0.05), radius: 4, y: 2)
-        .position(x: node.position.x, y: node.position.y)
+        .position(
+            x: node.position.x,
+            y: node.position.y
+        )
     }
 
     private var header: some View {
@@ -62,22 +66,32 @@ struct SkillNodeCard: View {
         .gesture(
             DragGesture(minimumDistance: 0, coordinateSpace: .named("graph-space"))
                 .onChanged { value in
+                    let unscaledStart = CGPoint(
+                        x: value.startLocation.x / zoomScale,
+                        y: value.startLocation.y / zoomScale
+                    )
+
                     if dragAnchorOffset == nil {
                         dragAnchorOffset = CGSize(
-                            width: value.startLocation.x - node.position.x,
-                            height: value.startLocation.y - node.position.y
+                            width: unscaledStart.x - node.position.x,
+                            height: unscaledStart.y - node.position.y
                         )
                     }
 
                     guard let dragAnchorOffset else { return }
+
+                    let unscaledCurrent = CGPoint(
+                        x: value.location.x / zoomScale,
+                        y: value.location.y / zoomScale
+                    )
 
                     var transaction = Transaction()
                     transaction.disablesAnimations = true
 
                     withTransaction(transaction) {
                         node.position = GraphPoint(
-                            x: value.location.x - dragAnchorOffset.width,
-                            y: value.location.y - dragAnchorOffset.height
+                            x: unscaledCurrent.x - dragAnchorOffset.width,
+                            y: unscaledCurrent.y - dragAnchorOffset.height
                         )
                     }
                 }

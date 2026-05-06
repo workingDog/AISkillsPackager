@@ -34,7 +34,7 @@ Compose a set of skills ready for exporting as a manifest + combined instruction
 
 2   Skill Composition
 
--   User create a package made of selected skills plus explicit input/output mappings between them.
+-   User creates a package made of selected skills plus explicit input/output mappings between them.
 
 3   Packaging
 
