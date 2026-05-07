@@ -5,7 +5,7 @@
 //  Created by Ringo Wathelet on 2026/05/07.
 //
 import Foundation
-import SkyllerKit
+import SwiftSkyllKit
 
 
 extension SkyllSkill {

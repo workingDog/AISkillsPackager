@@ -1,15 +1,6 @@
 {
-  "originHash" : "7191550dab0e03d835ede2aa41df896960f602dc2d1d924d59550b71b986e214",
+  "originHash" : "69517bd0110f03794d013399cbf0c83067cb78cfa4ec832e0ed57a8d8600c509",
   "pins" : [
-    {
-      "identity" : "skyllerkit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/workingDog/SkyllerKit",
-      "state" : {
-        "branch" : "main",
-        "revision" : "f9ff96135b81a0354caa52fc569b5d0d66396376"
-      }
-    },
     {
       "identity" : "swift-concurrency-extras",
       "kind" : "remoteSourceControl",
@@ -17,6 +8,15 @@
       "state" : {
         "revision" : "5a3825302b1a0d744183200915a47b508c828e6f",
         "version" : "1.3.2"
+      }
+    },
+    {
+      "identity" : "swiftskyllkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/workingDog/SwiftSkyllKit",
+      "state" : {
+        "branch" : "main",
+        "revision" : "9241e4206188603d1ce5e6d006219cade813859b"
       }
     },
     {

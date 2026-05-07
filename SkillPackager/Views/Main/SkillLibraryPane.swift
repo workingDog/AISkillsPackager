@@ -6,7 +6,7 @@
 //
 import Foundation
 import SwiftUI
-import SkyllerKit
+import SwiftSkyllKit
 
 
 struct SkillLibraryPane: View {

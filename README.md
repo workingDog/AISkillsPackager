@@ -80,6 +80,6 @@ Reordering of the **Selected Skills** in the **Details** view can be done by dra
 -   [Agent Skills](https://agentskills.io/home)
 
 
--   [SkyllerKit](https://github.com/workingDog/SkyllerKit) is a lightweight Swift package for searching and retrieving AI agent skills from [Skyll](https://www.skyll.app/) REST API
+-   [SwiftSkyllKit](https://github.com/workingDog/SwiftSkyllKit) is a lightweight Swift package for searching and retrieving AI agent skills from [Skyll](https://www.skyll.app/) REST API
 
 -   [Skyll](https://www.skyll.app/) is a skill discovery platform for AI agents
