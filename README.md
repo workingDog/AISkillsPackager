@@ -10,7 +10,8 @@ a package manifest with combined instructions ready for a AI model to use, for e
 
 Basic 3 columns view.
 
--   list of skills for selections, with possible import
+-   search for skills from [Skyll](https://www.skyll.app/) 
+-   list the skills for selections, with possible import
 -   package view selection, details text, graph view and model packaging
 -   package construction area
 
@@ -77,3 +78,8 @@ Reordering of the **Selected Skills** in the **Details** view can be done by dra
 -   [A practical guide to building agents](https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/)
 
 -   [Agent Skills](https://agentskills.io/home)
+
+
+-   [SkyllerKit](https://github.com/workingDog/SkyllerKit) is a lightweight Swift package for searching and retrieving AI agent skills from [Skyll](https://www.skyll.app/) REST API
+
+-   [Skyll](https://www.skyll.app/) is a skill discovery platform for AI agents
