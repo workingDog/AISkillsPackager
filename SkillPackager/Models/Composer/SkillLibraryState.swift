@@ -22,7 +22,7 @@ final class SkillLibraryState {
 //    }
     
     init() {
-        self.library = SkillDefinition.samples 
+      //  self.library = SkillDefinition.samples 
     }
 
     func toggleSelection(for skill: SkillDefinition) {

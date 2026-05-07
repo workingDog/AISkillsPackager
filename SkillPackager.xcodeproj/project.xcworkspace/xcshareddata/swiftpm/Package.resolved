@@ -1,6 +1,15 @@
 {
-  "originHash" : "496aeba323398df389b43149d07945189ddafa226e8dd186832a40a0c5082615",
+  "originHash" : "7191550dab0e03d835ede2aa41df896960f602dc2d1d924d59550b71b986e214",
   "pins" : [
+    {
+      "identity" : "skyllerkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/workingDog/SkyllerKit",
+      "state" : {
+        "branch" : "main",
+        "revision" : "f9ff96135b81a0354caa52fc569b5d0d66396376"
+      }
+    },
     {
       "identity" : "swift-concurrency-extras",
       "kind" : "remoteSourceControl",
