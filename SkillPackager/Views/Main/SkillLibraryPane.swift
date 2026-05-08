@@ -28,6 +28,10 @@ struct SkillLibraryPane: View {
             HStack {
                 TextField("Search for skills...", text: $query)
                     .textFieldStyle(.roundedBorder)
+                    .submitLabel(.search)
+                    .onSubmit {
+                        startSearch()
+                    }
 
                 Button(isFetching ? "Stop search" : "Search") {
                     if let searchTask {
